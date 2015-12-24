@@ -1,38 +1,32 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
-import { actions as catalogActions } from '../redux/modules/catalog';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
+import { actions as catalogActions } from 'redux/modules/catalog';
+import Catalog from 'components/Catalog';
+import Busy from 'components/Busy';
+
 import debugLib from 'debug';
 const debug = debugLib('app:CatalogView');
 
-import Catalog from 'components/Catalog';
-
-const mapStateToProps = (state) => ({
-  catalog: state.catalog
-});
-export class CatalogView extends React.Component {
+export class CatalogView extends Component {
   static propTypes = {
-    catalog: React.PropTypes.object.isRequired,
-    fetchCatalog: React.PropTypes.func.isRequired
+    catalog: PropTypes.object.isRequired,
+    fetchCatalog: PropTypes.func.isRequired
   }
 
   onOpen () {
-    debug('on open handler');
+    debug('onOpen');
     this.props.fetchCatalog();
   }
 
   onSelect (id) {
-    debug('on select handler', id);
+    debug('onSelect', id);
   }
 
   render () {
     const { catalog } = this.props;
-    let busyNotice;
-    if (catalog.loading) {
-      busyNotice = <div>Busy...</div>;
-    } else {
-      busyNotice = null;
-    }
 
     return (
       <div className='container text-center'>
@@ -41,7 +35,7 @@ export class CatalogView extends React.Component {
           data={catalog}
           open={this.onOpen.bind(this)}
           select={this.onSelect.bind(this)} />
-        {busyNotice}
+        <Busy busy={catalog.loading} />
         <hr />
         <Link to='/'>Back To Home View</Link>
       </div>
@@ -49,4 +43,10 @@ export class CatalogView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, catalogActions)(CatalogView);
+// selectors
+const catalogSelector = state => state.catalog;
+const stateSelector = createStructuredSelector({
+  catalog: catalogSelector
+});
+
+export default connect(stateSelector, catalogActions)(CatalogView);
