@@ -1,5 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
 import { Link } from 'react-router';
 import { actions as counterActions } from 'redux/modules/counter';
 import styles from './CounterView.scss';
@@ -9,9 +10,6 @@ import styles from './CounterView.scss';
 // export the decorated component after the main class definition so
 // the component can be tested w/ and w/o being connected.
 // See: http://rackt.github.io/redux/docs/recipes/WritingTests.html
-const mapStateToProps = (state) => ({
-  counter: state.counter
-});
 export class CounterView extends React.Component {
   static propTypes = {
     counter: React.PropTypes.number.isRequired,
@@ -42,4 +40,9 @@ export class CounterView extends React.Component {
   }
 }
 
-export default connect(mapStateToProps, counterActions)(CounterView);
+const counterSelector = state => state.counter;
+const stateSelector = createStructuredSelector({
+  counter: counterSelector
+});
+
+export default connect(stateSelector, counterActions)(CounterView);
