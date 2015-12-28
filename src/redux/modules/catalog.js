@@ -1,13 +1,12 @@
-import { createAction,
-         handleActions } from 'redux-actions';
+import { combineReducers } from 'redux';
+import { createAction /*,
+         handleActions */ } from 'redux-actions';
 import fetch from 'isomorphic-fetch';
+import { REQUEST_CATALOG, RECEIVE_CATALOG, REQUEST_CATALOG_FAILED } from './constants';
+import sources from './sources';
+import sourcesMetadata from './sources-metadata';
 import debugLib from 'debug';
 const debug = debugLib('app:redux:catalog');
-
-// export const CATALOG_OPEN = 'CATALOG_OPEN';
-export const REQUEST_CATALOG = 'REQUEST_CATALOG';
-export const RECEIVE_CATALOG = 'RECEIVE_CATALOG';
-export const REQUEST_CATALOG_FAILED = 'REQUEST_CATALOG_FAILED';
 
 // actions
 export const requestCatalog = createAction(REQUEST_CATALOG);
@@ -37,21 +36,58 @@ export const actions = {
   fetchCatalog
 };
 
-const initialState = {
-  name: null,
-  loading: false,
-  sources: []
+const loading = (state, action) => {
+  debug('loading reducer, action:', action);
+  switch (action.type) {
+    case REQUEST_CATALOG:
+      return true;
+    default:
+      return false;
+  }
 };
 
-// reducer
-export default handleActions({
-  REQUEST_CATALOG: (state, { payload }) => {
-    return Object.assign({}, state, { loading: true });
-  },
-  RECEIVE_CATALOG: (state, { payload }) => {
-    return Object.assign({}, state, payload, { loading: false });
-  },
-  REQUEST_CATALOG_FAILED: (state, { payload }) => {
-    return Object.assign({}, state, { loading: false });
+const name = (state = '', action) => {
+  debug('name reducer, action:', action);
+  switch (action.type) {
+    case RECEIVE_CATALOG:
+      return action.payload.name;
+    default:
+      return state;
   }
-}, initialState);
+};
+
+export default combineReducers({
+  loading,
+  name,
+  sources,
+  sourcesMetadata
+});
+
+// const initialState = {
+//   name: null,
+//   loading: false,
+//   sources: [],
+//   sourcesMetadata: []
+// };
+
+// reducer
+// export default handleActions({
+//   REQUEST_CATALOG: (state, { payload }) => {
+//     return Object.assign({}, state, {
+//       loading: true
+//     });
+//   },
+//   RECEIVE_CATALOG: (state, { payload }) => {
+//     return Object.assign({}, state, {
+//       loading: false,
+//       name: payload.name,
+//       sources: sources(payload.sources),
+//       sourcesMetadata: sourcesMetadata(payload.sourcesMetadata)
+//     });
+//   },
+//   REQUEST_CATALOG_FAILED: (state, { payload }) => {
+//     return Object.assign({}, state, {
+//       loading: false
+//     });
+//   }
+// }, initialState);
