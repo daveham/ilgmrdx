@@ -5,7 +5,7 @@ import debugLib from 'debug';
 const debug = debugLib('app:Catalog');
 
 const Catalog = (props) => {
-  const { name, sources } = props.data;
+  const { name, sources, sourcesMetadataById } = props;
   let heading = 'Catalog';
   let openButton = null;
   if (name && name.length > 0) {
@@ -30,20 +30,27 @@ const Catalog = (props) => {
       <h2>{heading}</h2>
       {openButton}
       <div className={styles.catalog}>
-        <SourceList sources={sources} select={props.select} />
+        <SourceList
+          sources={sources}
+          sourcesMetadataById={sourcesMetadataById}
+          select={props.select} />
       </div>
     </div>
   );
 };
 
 Catalog.propTypes = {
-  data: PropTypes.object,
+  name: PropTypes.string,
+  sources: PropTypes.array,
+  sourcesMetadataById: PropTypes.object,
   open: PropTypes.func,
   select: PropTypes.func
 };
 
 Catalog.defaultProps = {
-  data: {},
+  name: '',
+  sources: [],
+  sourcesMetadataById: {},
   open: () => {},
   select: () => {}
 };

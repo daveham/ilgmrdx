@@ -2,23 +2,30 @@ import React, { PropTypes } from 'react';
 import SourceItem from './SourceItem';
 
 const SourceList = (props) => {
-  const { sources, select } = props;
+  const { sources, sourcesMetadataById, select } = props;
   return (
-    <ul>
+    <div>
       { sources.map(source => {
-        return <SourceItem key={source.id} id={source.id} name={source.name} select={select} />;
+        return <SourceItem
+          key={source.id}
+          id={source.id}
+          name={source.name}
+          metadata={sourcesMetadataById[source.id]}
+          select={select} />;
       })}
-    </ul>
+    </div>
   );
 };
 
 SourceList.propTypes = {
   sources: PropTypes.array,
+  sourcesMetadataById: PropTypes.object,
   select: PropTypes.func
 };
 
 SourceList.defaultProps = {
   sources: [],
+  sourcesMetadataById: {},
   select: () => {}
 };
 

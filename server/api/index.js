@@ -15,4 +15,14 @@ export function configureApi (router) {
       res.json(JSON.parse(data));
     });
   });
+
+  router.get('/sourcemetadata/:id', (req, res) => {
+    const { id } = req.params;
+    setTimeout(() => {
+      res.json({
+        id,
+        size: 1024
+      });
+    }, 1000);
+  });
 }
