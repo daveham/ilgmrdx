@@ -5,7 +5,8 @@
     "standard-react"
   ],
   "env"     : {
-    "browser" : true
+    "browser" : true,
+    "node" : true
   },
   "globals" : {
     "__DEV__"      : false,
@@ -14,6 +15,8 @@
     "__DEBUG_NEW_WINDOW__" : false
   },
   "rules": {
-    "semi" : [2, "always"]
+    "semi" : [2, "always"],
+    "padded-blocks" : 0,
+    "space-before-function-paren" : 0
   }
 }

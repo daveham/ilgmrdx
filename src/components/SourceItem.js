@@ -6,7 +6,7 @@ const debug = debugLib('app:SourceItem');
 const SourceItem = (props) => {
   const { id, name, select, metadata } = props;
 
-  const loaded = metadata && !metadata.loading && metadata.size;
+  const loaded = metadata && !metadata.loading && metadata.status;
 
   const itemProps = {
     className: loaded ? styles.itemloaded : styles.item
@@ -24,7 +24,17 @@ const SourceItem = (props) => {
     details = <div className={styles.detail}>loading...</div>;
   } else {
     if (loaded) {
-      details = <div className={styles.detail}>size: {metadata.size}</div>;
+      details = (
+        <dl className={'dl-horizontal ' + styles.detail}>
+          <dt>file</dt><dd>{metadata.filename}</dd>
+          <dt>size</dt><dd>{metadata.status}</dd>
+          <dt>created</dt><dd>{metadata.ctime}</dd>
+          <dt>format</dt><dd>{metadata.format}</dd>
+          <dt>dimensions</dt><dd>{metadata.width} x {metadata.height} x {metadata.depth}</dd>
+          <dt>file size</dt><dd>{metadata.filesize}</dd>
+          <dt>resolution</dt><dd>{metadata.resolution}</dd>
+        </dl>
+      );
     } else {
       details = null;
     }
