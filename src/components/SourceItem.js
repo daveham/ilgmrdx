@@ -27,7 +27,8 @@ const SourceItem = (props) => {
       details = (
         <dl className={'dl-horizontal ' + styles.detail}>
           <dt>file</dt><dd>{metadata.filename}</dd>
-          <dt>size</dt><dd>{metadata.status}</dd>
+          <dt>status</dt><dd>{metadata.status}</dd>
+          <dt>size</dt><dd>{metadata.size}</dd>
           <dt>created</dt><dd>{metadata.ctime}</dd>
           <dt>format</dt><dd>{metadata.format}</dd>
           <dt>dimensions</dt><dd>{metadata.width} x {metadata.height} x {metadata.depth}</dd>

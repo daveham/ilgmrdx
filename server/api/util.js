@@ -9,17 +9,20 @@ export const loadCatalog = (cb) => {
   fs.readFile(catalogDataFile, 'utf8', (err, data) => {
     if (err) {
       debug('loadCatalog error', err);
-      cb(err);
-    } else {
-      // TODO: catch exception in JSON parsing
-      cb(null, JSON.parse(data));
+      return cb(err);
     }
+
+    // TODO: catch exception in JSON parsing
+    cb(null, JSON.parse(data));
   });
 };
 
 export const loadSource = (id, cb) => {
   loadCatalog((err, catalog) => {
-    if (err) return cb(err);
+    if (err) {
+      debug('loadSource error', err);
+      return cb(err);
+    }
 
     const item = catalog.sources.find(source => source.id === id);
     if (item) return cb(null, item);
