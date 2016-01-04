@@ -24,18 +24,27 @@ const SourceItem = (props) => {
     details = <div className={styles.detail}>loading...</div>;
   } else {
     if (loaded) {
-      details = (
-        <dl className={'dl-horizontal ' + styles.detail}>
-          <dt>file</dt><dd>{metadata.filename}</dd>
-          <dt>status</dt><dd>{metadata.status}</dd>
-          <dt>size</dt><dd>{metadata.size}</dd>
-          <dt>created</dt><dd>{metadata.ctime}</dd>
-          <dt>format</dt><dd>{metadata.format}</dd>
-          <dt>dimensions</dt><dd>{metadata.width} x {metadata.height} x {metadata.depth}</dd>
-          <dt>file size</dt><dd>{metadata.filesize}</dd>
-          <dt>resolution</dt><dd>{metadata.resolution}</dd>
-        </dl>
-      );
+      if (metadata.error) {
+        details = (
+          <dl className={'dl-horizontal ' + styles.detail}>
+            <dt>file</dt><dd>{metadata.filename}</dd>
+            <dt>status</dt><dd>File Error</dd>
+          </dl>
+        );
+      } else {
+        details = (
+          <dl className={'dl-horizontal ' + styles.detail}>
+            <dt>file</dt><dd>{metadata.filename}</dd>
+            <dt>status</dt><dd>{metadata.status}</dd>
+            <dt>size</dt><dd>{metadata.size}</dd>
+            <dt>created</dt><dd>{metadata.ctime}</dd>
+            <dt>format</dt><dd>{metadata.format}</dd>
+            <dt>dimensions</dt><dd>{metadata.width} x {metadata.height} x {metadata.depth}</dd>
+            <dt>file size</dt><dd>{metadata.filesize}</dd>
+            <dt>resolution</dt><dd>{metadata.resolution}</dd>
+          </dl>
+        );
+      }
     } else {
       details = null;
     }

@@ -11,6 +11,12 @@ const statPromise = photoFile => {
         debug('file stat error', err);
         return reject(new Error(err));
       }
+
+      if (!stats.isFile()) {
+        debug('not a file', photoFile);
+        return reject(new Error(`${photoFile} is not a file`));
+      }
+
       debug('file stats', stats);
       resolve(stats);
     });
@@ -73,7 +79,8 @@ export default function configureApi(router) {
         res.json(info);
       })
       .catch(error => {
-        info.status = error.message;
+        info.error = error.message;
+        info.status = 'file error';
         res.json(info);
       });
     });
