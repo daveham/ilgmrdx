@@ -36,6 +36,23 @@ const identifyPromise = photoFile => {
   });
 };
 
+const writeCachePromise = (cachePath, file, cacheData) => {
+  return new Promise((resolve, reject) => {
+    fs.mkdir(cachePath, (err) => {
+      debug('ignoring mkdir error', err);
+      const fullFile = path.join(cachePath, file);
+      fs.writeFile(fullFile, JSON.stringify(cacheData), (err) => {
+        if (err) {
+          debug('write cache promise error', err);
+          return reject(new Error(err));
+        }
+        debug('wrote cache file', fullFile);
+        resolve(true);
+      });
+    });
+  });
+};
+
 const unpackStats = (dest, data) => {
   dest.ctime = data.ctime;
   dest.size = data.size;
@@ -54,35 +71,46 @@ export default function configureApi(router) {
   router.get('/sourcemetadata/:id', (req, res, next) => {
     const { id } = req.params;
 
-    loadSource(id, (err, source) => {
-      if (err) {
-        return next(err);
+    const cachePath = path.resolve(__dirname, `../../data/stats/${id}/`);
+    const cacheFilename = 'data.json';
+    const cacheFile = path.join(cachePath, cacheFilename);
+
+    fs.readFile(cacheFile, 'utf8', (err, data) => {
+      if (!err) {
+        debug('using cached file');
+        return res.json(JSON.parse(data));
       }
 
-      const photoFile = path.resolve(__dirname, '../../data/sources/' + source.file);
+      loadSource(id, (err, source) => {
+        if (err) {
+          return next(err);
+        }
 
-      let info = {
-        id,
-        filename: source.file
-      };
+        const photoFile = path.resolve(__dirname, `../../data/sources/${source.file}`);
+        let info = { id, filename: source.file };
 
-      Promise.all([
-        statPromise(photoFile),
-        identifyPromise(photoFile)
-      ])
-      .then(data => {
-        info.status = 'exists';
+        Promise.all([
+          statPromise(photoFile),
+          identifyPromise(photoFile)
+        ])
+        .then(data => {
+          info.status = 'exists';
 
-        unpackStats(info, data[0]);
-        unpackIdentify(info, data[1]);
+          unpackStats(info, data[0]);
+          unpackIdentify(info, data[1]);
 
-        res.json(info);
-      })
-      .catch(error => {
-        info.error = error.message;
-        info.status = 'file error';
-        res.json(info);
+          return writeCachePromise(cachePath, cacheFilename, info);
+        })
+        .then(() => {
+          return res.json(info);
+        })
+        .catch(error => {
+          info.error = error.message;
+          info.status = 'file error';
+          res.json(info);
+        });
       });
     });
+
   });
 }
