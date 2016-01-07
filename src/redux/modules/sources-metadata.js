@@ -1,6 +1,13 @@
 import { createAction } from 'redux-actions';
 import fetch from 'isomorphic-fetch';
-import { REQUEST_SOURCE_METADATA, RECEIVE_SOURCE_METADATA, REQUEST_SOURCE_METADATA_FAILED } from './constants';
+import {
+  REQUEST_SOURCE_METADATA,
+  RECEIVE_SOURCE_METADATA,
+  REQUEST_SOURCE_METADATA_FAILED,
+  REQUEST_SOURCE_METADATA_DELETE,
+  REQUEST_SOURCE_METADATA_DELETE_FAILED,
+  REQUEST_SOURCE_METADATA_DELETED
+} from './constants';
 import debugLib from 'debug';
 const debug = debugLib('app:redux:sources-metadata');
 
@@ -25,11 +32,34 @@ export const fetchSourceMetadata = (id) => {
   };
 };
 
+export const sourceMetadataDelete = createAction(REQUEST_SOURCE_METADATA_DELETE);
+export const sourceMetadataDeleted = createAction(REQUEST_SOURCE_METADATA_DELETED);
+export const sourceMetadataDeleteFailed = createAction(REQUEST_SOURCE_METADATA_DELETE_FAILED);
+export const deleteSourceMetadata = (id) => {
+  return (dispatch, getState) => {
+    dispatch(sourceMetadataDelete({ id }));
+
+    return fetch(`/api/sourcemetadata/${id}`, { method: 'delete' })
+      .then(() => {
+        dispatch(sourceMetadataDeleted({ id }));
+      })
+      .catch(reason => {
+        debug('fetch.delete', reason);
+        dispatch(sourceMetadataDeleteFailed({ id }));
+      });
+  };
+};
+
 export const actions = {
   requestSourceMetadata,
   receiveSourceMetadata,
   requestSourceMetadataFailed,
-  fetchSourceMetadata
+  fetchSourceMetadata,
+
+  sourceMetadataDelete,
+  sourceMetadataDeleted,
+  sourceMetadataDeleteFailed,
+  deleteSourceMetadata
 };
 
 const objectReducer = (state = {}, action) => {
@@ -56,6 +86,13 @@ export default function sources (state = {}, action) {
     case RECEIVE_SOURCE_METADATA:
       id = action.payload.id;
       return Object.assign({}, state, { [id]: objectReducer(state[id], action) });
+
+    case REQUEST_SOURCE_METADATA_DELETED:
+      id = action.payload.id;
+      const cloneState = Object.assign({}, state);
+      delete cloneState[id];
+      return cloneState;
+
     default:
       return state;
   }

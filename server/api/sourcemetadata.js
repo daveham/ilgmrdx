@@ -1,6 +1,7 @@
 import path from 'path';
 import fs from 'fs';
 import gm from 'gm';
+import rimraf from 'rimraf';
 import { loadSource } from './util';
 const debug = require('debug')('app:api-sourcemetadata');
 
@@ -68,8 +69,11 @@ const unpackIdentify = (dest, data) => {
 };
 
 export default function configureApi(router) {
-  router.get('/sourcemetadata/:id', (req, res, next) => {
+
+  router.route('/sourcemetadata/:id')
+  .get((req, res, next) => {
     const { id } = req.params;
+    debug('get sourcemetadata/id', id);
 
     const cachePath = path.resolve(__dirname, `../../data/stats/${id}/`);
     const cacheFilename = 'data.json';
@@ -83,6 +87,7 @@ export default function configureApi(router) {
 
       loadSource(id, (err, source) => {
         if (err) {
+          debug('loadSource error', err);
           return next(err);
         }
 
@@ -111,6 +116,18 @@ export default function configureApi(router) {
         });
       });
     });
+  })
+  .delete((req, res, next) => {
+    const { id } = req.params;
+    debug('delete sourcemetadata/id', id);
+    const cachePath = path.resolve(__dirname, `../../data/stats/${id}/`);
 
+    rimraf(cachePath, (err) => {
+      if (err) {
+        debug('rimraf error', err);
+        return next(err);
+      }
+      return res.sendStatus(200);
+    });
   });
 }

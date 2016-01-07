@@ -16,7 +16,8 @@ export class CatalogView extends Component {
     catalog: PropTypes.object.isRequired,
     sourcesById: PropTypes.object.isRequired,
     fetchCatalog: PropTypes.func.isRequired,
-    fetchSourceMetadata: PropTypes.func.isRequired
+    fetchSourceMetadata: PropTypes.func.isRequired,
+    deleteSourceMetadata: PropTypes.func.isRequired
   }
 
   onOpen () {
@@ -32,6 +33,11 @@ export class CatalogView extends Component {
     }
   }
 
+  onClear(id) {
+    debug('onClear', id);
+    this.props.deleteSourceMetadata(id);
+  }
+
   render () {
     const { catalog } = this.props;
     const { name, loading, sources, sourcesMetadata } = catalog;
@@ -45,7 +51,8 @@ export class CatalogView extends Component {
           sources={sources}
           sourcesMetadataById={sourcesMetadata}
           open={this.onOpen.bind(this)}
-          select={this.onSelect.bind(this)} />
+          select={this.onSelect.bind(this)}
+          clear={this.onClear.bind(this)} />
         <Busy busy={catalog.loading} />
         <hr />
         <Link to='/'>Back To Home View</Link>

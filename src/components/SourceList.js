@@ -2,7 +2,7 @@ import React, { PropTypes } from 'react';
 import SourceItem from './SourceItem';
 
 const SourceList = (props) => {
-  const { sources, sourcesMetadataById, select } = props;
+  const { sources, sourcesMetadataById, select, clear } = props;
   return (
     <div>
       { sources.map(source => {
@@ -11,7 +11,8 @@ const SourceList = (props) => {
           id={source.id}
           name={source.name}
           metadata={sourcesMetadataById[source.id]}
-          select={select} />;
+          select={select}
+          clear={clear} />;
       })}
     </div>
   );
@@ -20,13 +21,15 @@ const SourceList = (props) => {
 SourceList.propTypes = {
   sources: PropTypes.array,
   sourcesMetadataById: PropTypes.object,
-  select: PropTypes.func
+  select: PropTypes.func,
+  clear: PropTypes.func
 };
 
 SourceList.defaultProps = {
   sources: [],
   sourcesMetadataById: {},
-  select: () => {}
+  select: () => {},
+  clear: () => {}
 };
 
 export default SourceList;
