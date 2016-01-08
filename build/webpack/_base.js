@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 import cssnano from 'cssnano';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
+import WebpackNotifierPlugin from 'webpack-notifier';
 import config from '../../config';
 import _debug from 'debug';
 
@@ -43,7 +44,8 @@ const webpackConfig = {
       minify: {
         collapseWhitespace: true
       }
-    })
+    }),
+    new WebpackNotifierPlugin({ title: 'IlGmRdx'})
   ],
   resolve: {
     root: paths.base(config.dir_client),
