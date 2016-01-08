@@ -109,7 +109,8 @@ config.utils_paths = (() => {
   return {
     base   : base,
     client : base.bind(null, config.dir_client),
-    dist   : base.bind(null, config.dir_dist)
+    dist   : base.bind(null, config.dir_dist),
+    data   : base.bind(null, config.dir_data)
   };
 })();
 

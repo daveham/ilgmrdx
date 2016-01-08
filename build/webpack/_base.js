@@ -45,7 +45,7 @@ const webpackConfig = {
         collapseWhitespace: true
       }
     }),
-    new WebpackNotifierPlugin({ title: 'IlGmRdx'})
+    new WebpackNotifierPlugin({ title: 'IlGmRdx' })
   ],
   resolve: {
     root: paths.base(config.dir_client),

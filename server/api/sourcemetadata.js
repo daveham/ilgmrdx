@@ -1,58 +1,13 @@
 import path from 'path';
 import fs from 'fs';
-import gm from 'gm';
 import rimraf from 'rimraf';
-import { loadSource } from './util';
+import config from '../../config';
+import { loadSource, statPromise, writeJsonCachePromise } from './util';
+import { identifyPromise } from './gm-util';
+
+const paths = config.utils_paths;
+
 const debug = require('debug')('app:api-sourcemetadata');
-
-const statPromise = photoFile => {
-  return new Promise((resolve, reject) => {
-    fs.stat(photoFile, (err, stats) => {
-      if (err) {
-        debug('file stat error', err);
-        return reject(new Error(err));
-      }
-
-      if (!stats.isFile()) {
-        debug('not a file', photoFile);
-        return reject(new Error(`${photoFile} is not a file`));
-      }
-
-      debug('file stats', stats);
-      resolve(stats);
-    });
-  });
-};
-
-const identifyPromise = photoFile => {
-  return new Promise((resolve, reject) => {
-    gm(photoFile).identify((err, gmdata) => {
-      if (err) {
-        debug('photo service error, gm identify', err);
-        return reject(new Error(err));
-      }
-      debug('gm identify', gmdata);
-      resolve(gmdata);
-    });
-  });
-};
-
-const writeCachePromise = (cachePath, file, cacheData) => {
-  return new Promise((resolve, reject) => {
-    fs.mkdir(cachePath, (err) => {
-      debug('ignoring mkdir error', err);
-      const fullFile = path.join(cachePath, file);
-      fs.writeFile(fullFile, JSON.stringify(cacheData), (err) => {
-        if (err) {
-          debug('write cache promise error', err);
-          return reject(new Error(err));
-        }
-        debug('wrote cache file', fullFile);
-        resolve(true);
-      });
-    });
-  });
-};
 
 const unpackStats = (dest, data) => {
   dest.ctime = data.ctime;
@@ -75,7 +30,7 @@ export default function configureApi(router) {
     const { id } = req.params;
     debug('get sourcemetadata/id', id);
 
-    const cachePath = path.resolve(__dirname, `../../data/stats/${id}/`);
+    const cachePath = path.join(paths.base(config.dir_data), 'stats', id);
     const cacheFilename = 'data.json';
     const cacheFile = path.join(cachePath, cacheFilename);
 
@@ -91,7 +46,7 @@ export default function configureApi(router) {
           return next(err);
         }
 
-        const photoFile = path.resolve(__dirname, `../../data/sources/${source.file}`);
+        const photoFile = path.join(paths.base(config.dir_data), 'sources', source.file);
         let info = { id, filename: source.file };
 
         Promise.all([
@@ -104,7 +59,7 @@ export default function configureApi(router) {
           unpackStats(info, data[0]);
           unpackIdentify(info, data[1]);
 
-          return writeCachePromise(cachePath, cacheFilename, info);
+          return writeJsonCachePromise(cachePath, cacheFilename, info);
         })
         .then(() => {
           return res.json(info);
@@ -120,7 +75,7 @@ export default function configureApi(router) {
   .delete((req, res, next) => {
     const { id } = req.params;
     debug('delete sourcemetadata/id', id);
-    const cachePath = path.resolve(__dirname, `../../data/stats/${id}/`);
+    const cachePath = path.join(paths.base(config.dir_data), 'stats', id);
 
     rimraf(cachePath, (err) => {
       if (err) {

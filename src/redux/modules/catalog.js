@@ -37,7 +37,7 @@ export const actions = {
 };
 
 const loading = (state, action) => {
-  debug('loading reducer, action:', action);
+  // debug('loading reducer, action:', action);
   switch (action.type) {
     case REQUEST_CATALOG:
       return true;
@@ -47,7 +47,7 @@ const loading = (state, action) => {
 };
 
 const name = (state = '', action) => {
-  debug('name reducer, action:', action);
+  // debug('name reducer, action:', action);
   switch (action.type) {
     case RECEIVE_CATALOG:
       return action.payload.name;
