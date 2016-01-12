@@ -1,4 +1,5 @@
 import express from 'express';
+import path from 'path';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import historyApiFallback from 'connect-history-api-fallback';
@@ -15,6 +16,8 @@ const paths = config.utils_paths;
 const router = express.Router();
 configureApi(router);
 app.use('/api', router);
+
+app.use(express.static(path.join(paths.base(config.dir_data), 'public')));
 
 app.use(historyApiFallback({
   verbose: false

@@ -14,3 +14,17 @@ export const identifyPromise = graphicsFile => {
     });
   });
 };
+
+export const thumbPromise = (graphicsFile, thumbFile) => {
+  return new Promise((resolve, reject) => {
+    debug('thumb', graphicsFile, thumbFile);
+    gm(graphicsFile).thumb(100, 100, thumbFile, 80, (err, gmdata) => {
+      if (err) {
+        debug('gm service error, gm resize', err);
+        return reject(new Error(err));
+      }
+      debug('gm resize', gmdata);
+      resolve(gmdata);
+    });
+  });
+};

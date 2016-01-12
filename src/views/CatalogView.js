@@ -5,11 +5,19 @@ import { createSelector, createStructuredSelector } from 'reselect';
 
 import { actions as catalogActions } from 'redux/modules/catalog';
 import { actions as sourceMetadataActions } from 'redux/modules/sources-metadata';
+import { actions as sourceThumbsActions } from 'redux/modules/sources-thumbs';
 import Catalog from 'components/Catalog';
 import Busy from 'components/Busy';
 
 import debugLib from 'debug';
 const debug = debugLib('app:CatalogView');
+
+const actions = Object.assign(
+  {},
+  catalogActions,
+  sourceMetadataActions,
+  sourceThumbsActions
+);
 
 export class CatalogView extends Component {
   static propTypes = {
@@ -17,12 +25,15 @@ export class CatalogView extends Component {
     sourcesById: PropTypes.object.isRequired,
     fetchCatalog: PropTypes.func.isRequired,
     fetchSourceMetadata: PropTypes.func.isRequired,
-    deleteSourceMetadata: PropTypes.func.isRequired
+    deleteSourceMetadata: PropTypes.func.isRequired,
+    fetchSourceThumbs: PropTypes.func.isRequired,
+    generateSourceThumb: PropTypes.func.isRequired
   }
 
   onOpen () {
     debug('onOpen');
     this.props.fetchCatalog();
+    this.props.fetchSourceThumbs();
   }
 
   onSelect (id) {
@@ -38,20 +49,27 @@ export class CatalogView extends Component {
     this.props.deleteSourceMetadata(id);
   }
 
+  onGenerate(id) {
+    debug('onGenerate', id);
+    this.props.generateSourceThumb(id, this.props.sourcesById[id].file);
+  }
+
   render () {
     const { catalog } = this.props;
-    const { name, loading, sources, sourcesMetadata } = catalog;
+    const { name, loading, sources, sourcesMetadata, sourcesThumbs } = catalog;
 
     return (
       <div className='container text-center'>
-        <h1>This is the catalog view!</h1>
+        <h1>Catalog</h1>
         <Catalog
           name={name}
           loading={loading}
           sources={sources}
           sourcesMetadataById={sourcesMetadata}
+          sourcesThumbs={sourcesThumbs}
           open={this.onOpen.bind(this)}
           select={this.onSelect.bind(this)}
+          generate={this.onGenerate.bind(this)}
           clear={this.onClear.bind(this)} />
         <Busy busy={catalog.loading} />
         <hr />
@@ -79,4 +97,4 @@ const stateSelector = createStructuredSelector({
   sourcesById
 });
 
-export default connect(stateSelector, Object.assign({}, catalogActions, sourceMetadataActions))(CatalogView);
+export default connect(stateSelector, actions)(CatalogView);

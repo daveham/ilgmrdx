@@ -45,7 +45,7 @@ export const deleteSourceMetadata = (id) => {
       })
       .catch(reason => {
         debug('fetch.delete', reason);
-        dispatch(sourceMetadataDeleteFailed({ id }));
+        dispatch(sourceMetadataDeleteFailed({ id, reason }));
       });
   };
 };
@@ -70,7 +70,7 @@ const objectLoadingReducer = (state = {}, loading) => {
 };
 
 // reducer
-export default function sources (state = {}, action) {
+export default (state = {}, action) => {
   debug('reducer, action:', action);
 
   let id;
@@ -96,4 +96,4 @@ export default function sources (state = {}, action) {
     default:
       return state;
   }
-}
+};

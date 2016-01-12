@@ -4,7 +4,7 @@ import debugLib from 'debug';
 const debug = debugLib('app:SourceItem');
 
 const SourceItem = (props) => {
-  const { id, name, select, clear, metadata } = props;
+  const { id, name, thumb, thumbsLoading, select, generate, clear, metadata } = props;
 
   const loaded = metadata && !metadata.loading && metadata.status;
 
@@ -17,7 +17,7 @@ const SourceItem = (props) => {
   if (loaded) {
     const buttonProps = {
       className: 'btn btn-default',
-      onClick: (event) => {
+      onClick: event => {
         event.preventDefault();
         debug('clear button clicked');
         clear(id);
@@ -25,11 +25,31 @@ const SourceItem = (props) => {
     };
     button = <button {...buttonProps}>Clear</button>;
   } else {
-    itemProps.onClick = (event) => {
+    itemProps.onClick = event => {
       event.preventDefault();
       debug('source item clicked', id);
       select(id);
     };
+  }
+
+  let image = null;
+  if (thumbsLoading || thumb === 'busy') {
+    image = <img src='/genbusy.gif' />;
+  } else {
+    if (thumb === 'ready') {
+      const src = `/${id}_thumb.jpg`;
+      image = <img src={src} />;
+    } else {
+      const genButtonProps = {
+        className: 'btn btn-default',
+        onClick: event => {
+          event.preventDefault();
+          debug('generate button clicked');
+          generate(id);
+        }
+      };
+      image = <button {...genButtonProps}>Generate</button>;
+    }
   }
 
   let details;
@@ -68,8 +88,21 @@ const SourceItem = (props) => {
 
   return (
     <div {...itemProps}>
-      {name}<br />
-      {details}
+      <div className='container-fluid'>
+        <div className='row'>
+          <div className='col-md-12'>
+            {name}
+          </div>
+        </div>
+        <div className='row'>
+          <div className='col-md-2'>
+            {image}
+          </div>
+          <div className='col-md-10'>
+            {details}
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
@@ -77,8 +110,11 @@ const SourceItem = (props) => {
 SourceItem.propTypes = {
   id: PropTypes.string,
   name: PropTypes.string,
+  thumb: PropTypes.string,
+  thumbsLoading: PropTypes.bool,
   metadata: PropTypes.object,
   select: PropTypes.func,
+  generate: PropTypes.func,
   clear: PropTypes.func
 };
 
@@ -86,7 +122,10 @@ SourceItem.defaultProps = {
   id: '0',
   name: '',
   metadata: {},
+  thumb: null,
+  thumbsLoading: false,
   select: () => {},
+  generate: () => {},
   clear: () => {}
 };
 

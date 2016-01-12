@@ -5,6 +5,7 @@ import fetch from 'isomorphic-fetch';
 import { REQUEST_CATALOG, RECEIVE_CATALOG, REQUEST_CATALOG_FAILED } from './constants';
 import sources from './sources';
 import sourcesMetadata from './sources-metadata';
+import sourcesThumbs from './sources-thumbs';
 import debugLib from 'debug';
 const debug = debugLib('app:redux:catalog');
 
@@ -60,7 +61,8 @@ export default combineReducers({
   loading,
   name,
   sources,
-  sourcesMetadata
+  sourcesMetadata,
+  sourcesThumbs
 });
 
 // const initialState = {
