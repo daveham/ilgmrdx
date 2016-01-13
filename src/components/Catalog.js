@@ -6,40 +6,34 @@ const debug = debugLib('app:Catalog');
 
 const Catalog = (props) => {
   const { name, sources, sourcesMetadataById, sourcesThumbs, open, select, generate, clear } = props;
-  let heading = 'Catalog';
-  let openButton = null;
-  if (name && name.length > 0) {
-    heading = heading + ' - ' + name;
-  } else {
-    const buttonProps = {
-      className: 'btn btn-default',
-      onClick: (event) => {
-        event.preventDefault();
-        debug('open catalog button clicked');
-        open();
-      }
-    };
 
-    openButton = (
-      <button {...buttonProps}>Open</button>
+  if (name && name.length > 0) {
+    return (
+      <div className='container text-left'>
+        <h2>{name}</h2>
+        <div className={styles.catalog}>
+          <SourceList
+            sources={sources}
+            sourcesMetadataById={sourcesMetadataById}
+            sourcesThumbs={sourcesThumbs}
+            select={select}
+            generate={generate}
+            clear={clear} />
+        </div>
+      </div>
     );
   }
 
-  return (
-    <div className='container text-left'>
-      <h2>{heading}</h2>
-      {openButton}
-      <div className={styles.catalog}>
-        <SourceList
-          sources={sources}
-          sourcesMetadataById={sourcesMetadataById}
-          sourcesThumbs={sourcesThumbs}
-          select={select}
-          generate={generate}
-          clear={clear} />
-      </div>
-    </div>
-  );
+  const buttonProps = {
+    className: 'btn btn-default',
+    onClick: (event) => {
+      event.preventDefault();
+      debug('open catalog button clicked');
+      open();
+    }
+  };
+
+  return <button {...buttonProps}>Open</button>;
 };
 
 Catalog.propTypes = {

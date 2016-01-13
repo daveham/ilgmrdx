@@ -1,21 +1,36 @@
-.item {
-  background: #ddd;
-  cursor: pointer;
-  font-weight: bold;
+$container-background-color: #fff;
+
+%item-base {
+  font-weight: normal;
   margin: 2px 2px 3px 15px;
-  padding: 5px 15px;
+  padding: 5px 25px;
+}
+
+.item {
+  @extend %item-base;
+  cursor: pointer;
 }
 
 .itemloaded {
-  background: #ddd;
+  @extend %item-base;
   cursor: auto;
-  font-weight: bold;
-  margin: 2px 2px 3px 15px;
-  padding: 5px 10px;
 }
 
 .detail {
   cursor: auto;
   font-weight: normal;
   margin-left: 5px;
+}
+
+.thumb {
+  box-shadow: 2px 2px 4px 1px rgba(100, 100, 100, .5);
+  margin: 20px 0 10px;
+}
+
+.container {
+  background: $container-background-color;
+  border-radius: 4px;
+  box-shadow: 2px 2px 4px 1px rgba(162, 162, 162, .5);
+  margin-bottom: 10px;
+  padding: 6px 6px 12px;
 }

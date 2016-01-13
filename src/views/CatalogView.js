@@ -73,7 +73,7 @@ export class CatalogView extends Component {
           clear={this.onClear.bind(this)} />
         <Busy busy={catalog.loading} />
         <hr />
-        <Link to='/'>Back To Home View</Link>
+        <Link to='/'>Home</Link>
       </div>
     );
   }

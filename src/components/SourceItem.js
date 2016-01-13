@@ -1,4 +1,6 @@
 import React, { PropTypes } from 'react';
+import Busy from './Busy';
+import SourceItemDetails from './SourceItemDetails';
 import styles from './SourceItem.scss';
 import debugLib from 'debug';
 const debug = debugLib('app:SourceItem');
@@ -12,19 +14,7 @@ const SourceItem = (props) => {
     className: loaded ? styles.itemloaded : styles.item
   };
 
-  let button = null;
-
-  if (loaded) {
-    const buttonProps = {
-      className: 'btn btn-default',
-      onClick: event => {
-        event.preventDefault();
-        debug('clear button clicked');
-        clear(id);
-      }
-    };
-    button = <button {...buttonProps}>Clear</button>;
-  } else {
+  if (!loaded) {
     itemProps.onClick = event => {
       event.preventDefault();
       debug('source item clicked', id);
@@ -34,14 +24,14 @@ const SourceItem = (props) => {
 
   let image = null;
   if (thumbsLoading || thumb === 'busy') {
-    image = <img src='/genbusy.gif' />;
+    image = <Busy busy />;
   } else {
     if (thumb === 'ready') {
       const src = `/${id}_thumb.jpg`;
-      image = <img src={src} />;
+      image = <img className={styles.thumb} src={src} />;
     } else {
       const genButtonProps = {
-        className: 'btn btn-default',
+        className: 'btn btn-success',
         onClick: event => {
           event.preventDefault();
           debug('generate button clicked');
@@ -52,54 +42,30 @@ const SourceItem = (props) => {
     }
   }
 
-  let details;
-  if (metadata.loading) {
-    details = <div className={styles.detail}>loading...</div>;
-  } else {
-    if (loaded) {
-      if (metadata.error) {
-        details = (
-          <dl className={'dl-horizontal ' + styles.detail}>
-            <dt>file</dt><dd>{metadata.filename}</dd>
-            <dt>status</dt><dd>File Error</dd>
-          </dl>
-        );
-      } else {
-        details = (
-          <div>
-            {button}
-            <dl className={'dl-horizontal ' + styles.detail}>
-              <dt>file</dt><dd>{metadata.filename}</dd>
-              <dt>status</dt><dd>{metadata.status}</dd>
-              <dt>size</dt><dd>{metadata.size}</dd>
-              <dt>created</dt><dd>{metadata.ctime}</dd>
-              <dt>format</dt><dd>{metadata.format}</dd>
-              <dt>dimensions</dt><dd>{metadata.width} x {metadata.height} x {metadata.depth}</dd>
-              <dt>file size</dt><dd>{metadata.filesize}</dd>
-              <dt>resolution</dt><dd>{metadata.resolution}</dd>
-            </dl>
-          </div>
-        );
-      }
-    } else {
-      details = null;
-    }
-  }
-
   return (
     <div {...itemProps}>
       <div className='container-fluid'>
         <div className='row'>
-          <div className='col-md-12'>
-            {name}
-          </div>
-        </div>
-        <div className='row'>
           <div className='col-md-2'>
             {image}
           </div>
-          <div className='col-md-10'>
-            {details}
+          <div className={'col-md-10 ' + styles.container}>
+            {name}
+            <SourceItemDetails
+              id={id}
+              loading={metadata.loading}
+              error = {metadata.error}
+              filename = {metadata.filename}
+              status = {metadata.status}
+              size = {metadata.size}
+              ctime = {metadata.ctime}
+              format = {metadata.format}
+              width = {metadata.width}
+              height = {metadata.height}
+              depth = {metadata.depth}
+              filesize = {metadata.filesize}
+              resolution = {metadata.resolution}
+              clear={clear} />
           </div>
         </div>
       </div>

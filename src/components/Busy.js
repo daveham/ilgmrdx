@@ -1,9 +1,10 @@
 import React, { PropTypes } from 'react';
+import styles from './Catalog.scss';
 
 const Busy = (props) => {
   let busyNotice;
   if (props.busy) {
-    busyNotice = <div>Busy...</div>;
+    busyNotice = <span style={styles.busy}>{props.text}</span>;
   } else {
     busyNotice = <span/>;
   }
@@ -11,11 +12,13 @@ const Busy = (props) => {
 };
 
 Busy.propTypes = {
-  busy: PropTypes.bool
+  busy: PropTypes.bool,
+  text: PropTypes.string
 };
 
 Busy.defaultProps = {
-  busy: false
+  busy: true,
+  text: 'loading...'
 };
 
 export default Busy;
