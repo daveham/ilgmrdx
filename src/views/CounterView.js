@@ -20,7 +20,7 @@ export class CounterView extends React.Component {
   render () {
     return (
       <div className='container text-center'>
-        <h1>This is the counter view!</h1>
+        <h1>Counter</h1>
         <h2>
           Sample Counter:&nbsp;
           <span className={styles['counter--green']}>{this.props.counter}</span>
@@ -34,7 +34,7 @@ export class CounterView extends React.Component {
           Double (Async)
         </button>
         <hr />
-        <Link to='/'>Back To Home View</Link>
+        <Link to='/'>Home</Link>
       </div>
     );
   }

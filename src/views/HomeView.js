@@ -5,11 +5,11 @@ export class HomeView extends React.Component {
   render () {
     return (
       <div className='container text-center'>
-        <h1>Welcome to the React Redux Starter Kit</h1>
+        <h1>InferenceLens Graphics Manager on React/Redux</h1>
         <hr />
-        <Link to='/counter'>Go To Counter View</Link><br />
-        <Link to='/catalog'>Go To Catalog View</Link><br />
-        <Link to='/about'>Go To About View</Link>
+        <Link to='/counter'>Counter</Link><br />
+        <Link to='/catalog'>Catalog</Link><br />
+        <Link to='/about'>About</Link>
       </div>
     );
   }

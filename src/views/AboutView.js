@@ -5,9 +5,9 @@ export class AboutView extends React.Component {
   render () {
     return (
       <div className='container text-center'>
-        <h1>This is the about view!</h1>
+        <h1>About</h1>
         <hr />
-        <Link to='/'>Back To Home View</Link>
+        <Link to='/'>Home</Link>
       </div>
     );
   }
