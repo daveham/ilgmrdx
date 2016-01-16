@@ -2,9 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import Busy from './Busy';
 import SourceItemTitle from './SourceItemTitle';
 import SourceItemDetails from './SourceItemDetails';
+import SourceImage from './SourceImage';
 import styles from './SourceItem.scss';
-import debugLib from 'debug';
-const debug = debugLib('app:SourceItem');
 
 class SourceItem extends Component {
   static get propTypes() {
@@ -45,26 +44,6 @@ class SourceItem extends Component {
 
     const loaded = metadata && metadata.loading === false && metadata.status && metadata.status.length > 0;
 
-    let image = null;
-    if (thumbsLoading || thumb === 'busy') {
-      image = <Busy />;
-    } else {
-      if (thumb === 'ready') {
-        const src = `/${id}_thumb.jpg`;
-        image = <img className={styles.thumb} src={src} />;
-      } else {
-        const genButtonProps = {
-          className: 'btn btn-success',
-          onClick: event => {
-            event.preventDefault();
-            debug('generate button clicked');
-            generate(id);
-          }
-        };
-        image = <button {...genButtonProps}>Generate</button>;
-      }
-    }
-
     let details = null;
     const { expanded } = this.state;
     if (expanded) {
@@ -96,7 +75,11 @@ class SourceItem extends Component {
         <div className='container-fluid'>
           <div className='row'>
             <div className='col-md-2'>
-              {image}
+              <SourceImage
+                id={id}
+                thumb={thumb}
+                thumbsLoading={thumbsLoading}
+                generate={generate} />
             </div>
             <div className={'col-md-10 ' + styles.container}>
               <div className={styles.item}>
