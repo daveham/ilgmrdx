@@ -5,21 +5,16 @@ class SourceItemTitle extends Component {
   static get propTypes() {
     return {
       name: PropTypes.string,
-      expand: PropTypes.func
+      expanded: PropTypes.bool,
+      toggle: PropTypes.func
     };
   }
 
   static get defaultProps() {
     return {
       name: '',
-      expand: () => {}
-    };
-  }
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      expanded: false
+      expanded: false,
+      toggle: () => {}
     };
   }
 
@@ -28,13 +23,11 @@ class SourceItemTitle extends Component {
       className: styles.item,
       onClick: event => {
         event.preventDefault();
-        const expanded = !this.state.expanded;
-        this.setState({ expanded });
-        this.props.expand(expanded);
+        this.props.toggle();
       }
     };
 
-    const label = `${this.state.expanded ? '-' : '+'} ${this.props.name}`;
+    const label = `${this.props.expanded ? '-' : '+'} ${this.props.name}`;
 
     return <div {...itemProps}>{label}</div>;
   }

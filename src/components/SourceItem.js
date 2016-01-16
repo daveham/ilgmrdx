@@ -43,7 +43,7 @@ class SourceItem extends Component {
   render() {
     const { id, name, thumb, thumbsLoading, select, generate, clear, metadata } = this.props;
 
-    const loaded = metadata && !metadata.loading && metadata.status;
+    const loaded = metadata && metadata.loading === false && metadata.status && metadata.status.length > 0;
 
     let image = null;
     if (thumbsLoading || thumb === 'busy') {
@@ -66,7 +66,8 @@ class SourceItem extends Component {
     }
 
     let details = null;
-    if (this.state.expanded) {
+    const { expanded } = this.state;
+    if (expanded) {
       if (metadata.loading) {
         details = <Busy />;
       } else {
@@ -83,7 +84,10 @@ class SourceItem extends Component {
           depth = {metadata.depth}
           filesize = {metadata.filesize}
           resolution = {metadata.resolution}
-          clear={clear} />;
+          clear={(id) => {
+            this.setState({ expanded: false });
+            clear(id);
+          }} />;
       }
     }
 
@@ -98,12 +102,14 @@ class SourceItem extends Component {
               <div className={styles.item}>
                 <SourceItemTitle
                   name={name}
-                  expand={expanded => {
-                    debug('onExpanded', expanded);
-                    if (expanded && !loaded) {
-                      select(id);
+                  expanded={expanded}
+                  toggle={() => {
+                    if (!metadata.loading) {
+                      if (!(expanded || loaded)) {
+                        select(id);
+                      }
+                      this.setState({ expanded: !expanded });
                     }
-                    this.setState({ expanded });
                   }} />
               </div>
               {details}
