@@ -11,7 +11,7 @@ export default function configureApi(router) {
   router.route('/sourcethumbs')
     .get((req, res, next) => {
       debug('get all sourcethumbs');
-      const thumbPath = path.join(paths.base(config.dir_data), 'public');
+      const thumbPath = path.join(paths.base(config.dir_data), 'thumbs');
       glob('*_thumb.jpg', { cwd: thumbPath, nodir: true }, (err, data) => {
         if (err) {
           debug('glob error', err);
@@ -28,7 +28,7 @@ export default function configureApi(router) {
       const id = req.body.id;
       debug('sourceName, id', sourceName, id);
       const sourcePath = path.join(paths.base(config.dir_data), 'sources', sourceName);
-      const thumbPath = path.join(paths.base(config.dir_data), 'public', `${id}_thumb.jpg`);
+      const thumbPath = path.join(paths.base(config.dir_data), 'thumbs', `${id}_thumb.jpg`);
       thumbPromise(sourcePath, thumbPath)
         .then(data => {
           res.json({ thumb: thumbPath });

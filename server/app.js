@@ -17,7 +17,8 @@ const router = express.Router();
 configureApi(router);
 app.use('/api', router);
 
-app.use(express.static(path.join(paths.base(config.dir_data), 'public')));
+app.use('/thumbs', express.static(path.join(paths.base(config.dir_data), 'thumbs')));
+app.use('/tiles', express.static(path.join(paths.base(config.dir_data), 'tiles')));
 
 app.use(historyApiFallback({
   verbose: false

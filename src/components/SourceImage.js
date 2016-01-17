@@ -8,7 +8,7 @@ const SourceImage = (props) => {
     return <Busy />;
   } else {
     if (thumb === 'ready') {
-      const src = `/${id}_thumb.jpg`;
+      const src = `/thumbs/${id}_thumb.jpg`;
       return <img className={styles.thumb} src={src} />;
     } else {
       const genButtonProps = {
