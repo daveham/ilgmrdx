@@ -28,7 +28,7 @@ export class CatalogView extends Component {
     deleteSourceMetadata: PropTypes.func.isRequired,
     fetchSourceThumbs: PropTypes.func.isRequired,
     generateSourceThumb: PropTypes.func.isRequired
-  }
+  };
 
   onOpen () {
     debug('onOpen');
