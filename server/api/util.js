@@ -1,6 +1,6 @@
 import path from 'path';
 import fs from 'fs';
-import config from '../../config';
+import config from 'config';
 
 const debug = require('debug')('app:api-util');
 

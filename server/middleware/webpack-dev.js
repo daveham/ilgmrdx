@@ -1,5 +1,5 @@
 import WebpackDevMiddleware from 'webpack-dev-middleware';
-import config from '../../config';
+import config from 'config';
 
 const paths = config.utils_paths;
 const debug = require('debug')('app:server:webpack-dev');

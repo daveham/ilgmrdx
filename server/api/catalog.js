@@ -1,4 +1,4 @@
-import { loadCatalog } from './util';
+import { loadCatalog } from 'api/util';
 // const debug = require('debug')('app:api-catalog');
 
 export default function configureApi(router) {

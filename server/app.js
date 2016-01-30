@@ -3,8 +3,8 @@ import path from 'path';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
 import historyApiFallback from 'connect-history-api-fallback';
-import config from '../config';
-import { configureApi } from './api';
+import config from 'config';
+import { configureApi } from 'api';
 
 const app = express();
 app.use(logger('dev'));
