@@ -9,6 +9,7 @@
     "node" : true
   },
   "globals" : {
+    "io" : false,
     "__DEV__"      : false,
     "__PROD__"     : false,
     "__DEBUG__"    : false,
