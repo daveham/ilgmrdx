@@ -1,20 +1,20 @@
 import { createAction } from 'redux-actions';
 import fetch from 'isomorphic-fetch';
-import {
-  REQUEST_SOURCE_METADATA,
-  RECEIVE_SOURCE_METADATA,
-  REQUEST_SOURCE_METADATA_FAILED,
-  REQUEST_SOURCE_METADATA_DELETE,
-  REQUEST_SOURCE_METADATA_DELETE_FAILED,
-  REQUEST_SOURCE_METADATA_DELETED
-} from './constants';
 import debugLib from 'debug';
 const debug = debugLib('app:redux:sources-metadata');
 
+const REQUEST_SOURCE_METADATA = 'REQUEST_SOURCE_METADATA';
+const RECEIVE_SOURCE_METADATA = 'RECEIVE_SOURCE_METADATA';
+const REQUEST_SOURCE_METADATA_FAILED = 'REQUEST_SOURCE_METADATA_FAILED';
+
+const REQUEST_SOURCE_METADATA_DELETE = 'REQUEST_SOURCE_METADATA_DELETE';
+const REQUEST_SOURCE_METADATA_DELETE_FAILED = 'REQUEST_SOURCE_METADATA_DELETE_FAILED';
+const REQUEST_SOURCE_METADATA_DELETED = 'REQUEST_SOURCE_METADATA_DELETED';
+
 // actions
-export const requestSourceMetadata = createAction(REQUEST_SOURCE_METADATA);
-export const receiveSourceMetadata = createAction(RECEIVE_SOURCE_METADATA);
-export const requestSourceMetadataFailed = createAction(REQUEST_SOURCE_METADATA_FAILED);
+const requestSourceMetadata = createAction(REQUEST_SOURCE_METADATA);
+const receiveSourceMetadata = createAction(RECEIVE_SOURCE_METADATA);
+const requestSourceMetadataFailed = createAction(REQUEST_SOURCE_METADATA_FAILED);
 export const fetchSourceMetadata = (id) => {
   return (dispatch, getState) => {
     dispatch(requestSourceMetadata({ id }));
@@ -32,9 +32,9 @@ export const fetchSourceMetadata = (id) => {
   };
 };
 
-export const sourceMetadataDelete = createAction(REQUEST_SOURCE_METADATA_DELETE);
-export const sourceMetadataDeleted = createAction(REQUEST_SOURCE_METADATA_DELETED);
-export const sourceMetadataDeleteFailed = createAction(REQUEST_SOURCE_METADATA_DELETE_FAILED);
+const sourceMetadataDelete = createAction(REQUEST_SOURCE_METADATA_DELETE);
+const sourceMetadataDeleted = createAction(REQUEST_SOURCE_METADATA_DELETED);
+const sourceMetadataDeleteFailed = createAction(REQUEST_SOURCE_METADATA_DELETE_FAILED);
 export const deleteSourceMetadata = (id) => {
   return (dispatch, getState) => {
     dispatch(sourceMetadataDelete({ id }));
@@ -51,14 +51,7 @@ export const deleteSourceMetadata = (id) => {
 };
 
 export const actions = {
-  requestSourceMetadata,
-  receiveSourceMetadata,
-  requestSourceMetadataFailed,
   fetchSourceMetadata,
-
-  sourceMetadataDelete,
-  sourceMetadataDeleted,
-  sourceMetadataDeleteFailed,
   deleteSourceMetadata
 };
 

@@ -1,4 +1,4 @@
-import { RECEIVE_CATALOG } from './constants';
+import { RECEIVE_CATALOG } from './catalog';
 import debugLib from 'debug';
 const debug = debugLib('app:redux:sources');
 

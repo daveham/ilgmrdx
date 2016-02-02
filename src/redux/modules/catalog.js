@@ -2,12 +2,15 @@ import { combineReducers } from 'redux';
 import { createAction /*,
          handleActions */ } from 'redux-actions';
 import fetch from 'isomorphic-fetch';
-import { REQUEST_CATALOG, RECEIVE_CATALOG, REQUEST_CATALOG_FAILED } from './constants';
 import sources from './sources';
 import sourcesMetadata from './sources-metadata';
 import sourcesThumbs from './sources-thumbs';
 import debugLib from 'debug';
 const debug = debugLib('app:redux:catalog');
+
+const REQUEST_CATALOG = 'REQUEST_CATALOG';
+export const RECEIVE_CATALOG = 'RECEIVE_CATALOG';
+const REQUEST_CATALOG_FAILED = 'REQUEST_CATALOG_FAILED';
 
 // actions
 export const requestCatalog = createAction(REQUEST_CATALOG);
@@ -64,32 +67,3 @@ export default combineReducers({
   sourcesMetadata,
   sourcesThumbs
 });
-
-// const initialState = {
-//   name: null,
-//   loading: false,
-//   sources: [],
-//   sourcesMetadata: []
-// };
-
-// reducer
-// export default handleActions({
-//   REQUEST_CATALOG: (state, { payload }) => {
-//     return Object.assign({}, state, {
-//       loading: true
-//     });
-//   },
-//   RECEIVE_CATALOG: (state, { payload }) => {
-//     return Object.assign({}, state, {
-//       loading: false,
-//       name: payload.name,
-//       sources: sources(payload.sources),
-//       sourcesMetadata: sourcesMetadata(payload.sourcesMetadata)
-//     });
-//   },
-//   REQUEST_CATALOG_FAILED: (state, { payload }) => {
-//     return Object.assign({}, state, {
-//       loading: false
-//     });
-//   }
-// }, initialState);

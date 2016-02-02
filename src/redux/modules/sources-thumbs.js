@@ -1,20 +1,20 @@
 import { createAction } from 'redux-actions';
 import fetch from 'isomorphic-fetch';
-import {
-  REQUEST_SOURCE_THUMBS,
-  RECEIVE_SOURCE_THUMBS,
-  REQUEST_SOURCE_THUMBS_FAILED,
-  GENERATE_SOURCE_THUMB,
-  SOURCE_THUMB_GENERATED,
-  GENERATE_SOURCE_THUMB_FAILED
-} from './constants';
 import debugLib from 'debug';
 const debug = debugLib('app:redux:sources-thumbs');
 
+const REQUEST_SOURCE_THUMBS = 'REQUEST_SOURCE_THUMBS';
+const RECEIVE_SOURCE_THUMBS = 'RECEIVE_SOURCE_THUMBS';
+const REQUEST_SOURCE_THUMBS_FAILED = 'REQUEST_SOURCE_THUMBS_FAILED';
+
+const GENERATE_SOURCE_THUMB = 'GENERATE_SOURCE_THUMB';
+const SOURCE_THUMB_GENERATED = 'SOURCE_THUMB_GENERATED';
+const GENERATE_SOURCE_THUMB_FAILED = 'GENERATE_SOURCE_THUMB_FAILED';
+
 // actions
-export const requestSourceThumbs = createAction(REQUEST_SOURCE_THUMBS);
-export const receiveSourceThumbs = createAction(RECEIVE_SOURCE_THUMBS);
-export const requestSourceThumbsFailed = createAction(REQUEST_SOURCE_THUMBS_FAILED);
+const requestSourceThumbs = createAction(REQUEST_SOURCE_THUMBS);
+const receiveSourceThumbs = createAction(RECEIVE_SOURCE_THUMBS);
+const requestSourceThumbsFailed = createAction(REQUEST_SOURCE_THUMBS_FAILED);
 export const fetchSourceThumbs = () => {
   return (dispatch, getState) => {
     dispatch(requestSourceThumbs());
@@ -32,9 +32,9 @@ export const fetchSourceThumbs = () => {
   };
 };
 
-export const generateSourceThumbStart = createAction(GENERATE_SOURCE_THUMB);
-export const sourceThumbGenerated = createAction(SOURCE_THUMB_GENERATED);
-export const generateSourceThumbFailed = createAction(GENERATE_SOURCE_THUMB_FAILED);
+const generateSourceThumbStart = createAction(GENERATE_SOURCE_THUMB);
+const sourceThumbGenerated = createAction(SOURCE_THUMB_GENERATED);
+const generateSourceThumbFailed = createAction(GENERATE_SOURCE_THUMB_FAILED);
 export const generateSourceThumb = (id, sourceName) => {
   return (dispatch, getState) => {
     dispatch(generateSourceThumbStart({ id }));
@@ -56,14 +56,7 @@ export const generateSourceThumb = (id, sourceName) => {
 };
 
 export const actions = {
-  requestSourceThumbs,
-  receiveSourceThumbs,
-  requestSourceThumbsFailed,
   fetchSourceThumbs,
-
-  generateSourceThumbStart,
-  sourceThumbGenerated,
-  generateSourceThumbFailed,
   generateSourceThumb
 };
 
