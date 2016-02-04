@@ -17,7 +17,6 @@ function CoreLayout ({ children }) {
       <div className='view-container'>
         {children}
       </div>
-      <hr />
       <Socket/>
     </div>
   );
