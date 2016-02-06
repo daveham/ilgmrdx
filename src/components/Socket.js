@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { connectService } from 'redux/modules/service';
 import { sendPingCommand } from 'redux/modules/commands';
+// import Button from 'react-toolbox/lib/button';
 
 import styles from './Socket.scss';
 
@@ -23,22 +24,19 @@ export class Socket extends Component {
     this.props.connect();
   }
 
-  render () {
-    const pingButtonProps = {
-      className: 'btn-xs btn-success',
-      onClick: event => {
-        event.preventDefault();
-        this.props.ping({ data: 'socket component' });
-      }
-    };
+  handleOnClickPing(event) {
+    event.preventDefault();
+    this.props.ping({ data: 'socket component' });
+  }
 
+  render () {
     const msg = this.props.serviceError || (this.props.connecting ? 'connecting' : 'connected');
     const id = this.props.socket ? `id: ${this.props.socket.id}` : '';
 
     return (
       <Block layout center align className={styles.container}>
         <Block>
-          <button {...pingButtonProps}>Ping</button>
+          { /* <Button icon='add' label='Ping' raised onClick={this.handleOnClickPing.bind(this)}/> */ }
         </Block>
         <Block className={styles.status}>
           {msg}
