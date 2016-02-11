@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import RaisedButton from 'material-ui/lib/raised-button';
 import styles from './Catalog.scss';
 import SourceList from './SourceList';
 import debugLib from 'debug';
@@ -25,7 +26,7 @@ const Catalog = (props) => {
   }
 
   const buttonProps = {
-    className: 'btn btn-default',
+    label: 'Open',
     onClick: (event) => {
       event.preventDefault();
       debug('open catalog button clicked');
@@ -33,7 +34,7 @@ const Catalog = (props) => {
     }
   };
 
-  return <button {...buttonProps}>Open</button>;
+  return <RaisedButton {...buttonProps}/>;
 };
 
 Catalog.propTypes = {

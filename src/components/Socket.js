@@ -1,10 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import Block from 'react-blocks';
+import FontIcon from 'material-ui/lib/font-icon';
+import IconButton from 'material-ui/lib/icon-button';
+import Colors from 'material-ui/lib/styles/colors';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { connectService } from 'redux/modules/service';
 import { sendPingCommand } from 'redux/modules/commands';
-// import Button from 'react-toolbox/lib/button';
 
 import styles from './Socket.scss';
 
@@ -34,9 +36,11 @@ export class Socket extends Component {
     const id = this.props.socket ? `id: ${this.props.socket.id}` : '';
 
     return (
-      <Block layout center align className={styles.container}>
+      <Block layout center className={styles.container}>
         <Block>
-          { /* <Button icon='add' label='Ping' raised onClick={this.handleOnClickPing.bind(this)}/> */ }
+          <IconButton tooltip='ping' iconStyle={{ fontSize: '20px' }} tooltipPosition={'top-right'} onClick={this.handleOnClickPing.bind(this)}>
+            <FontIcon className='material-icons' color={Colors.blue500}>wifi_tethering</FontIcon>
+          </IconButton>
         </Block>
         <Block className={styles.status}>
           {msg}

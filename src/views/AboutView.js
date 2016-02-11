@@ -1,17 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router';
+import MainToolbar from 'components/MainToolbar';
 
-export class AboutView extends React.Component {
-
-  render () {
-    return (
-      <div className='container text-center'>
-        <h1>About</h1>
-        <hr />
-        <Link to='/'>Home</Link>
-      </div>
-    );
-  }
-}
-
-export default AboutView;
+export default (props) => {
+  return (
+    <div className='container text-center'>
+      <MainToolbar page='about' />
+    </div>
+  );
+};

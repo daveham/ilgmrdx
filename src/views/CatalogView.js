@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
+import MainToolbar from 'components/MainToolbar';
 
 import { actions as catalogActions } from 'redux/modules/catalog';
 import { actions as sourceMetadataActions } from 'redux/modules/sources-metadata';
@@ -60,7 +60,7 @@ export class CatalogView extends Component {
 
     return (
       <div className='container text-center'>
-        <h1>Catalog</h1>
+        <MainToolbar page='catalog' />
         <Catalog
           name={name}
           loading={loading}
@@ -72,8 +72,6 @@ export class CatalogView extends Component {
           generate={this.onGenerate.bind(this)}
           clear={this.onClear.bind(this)} />
         <Busy busy={catalog.loading} />
-        <hr />
-        <Link to='/'>Home</Link>
       </div>
     );
   }

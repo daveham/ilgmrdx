@@ -12,7 +12,7 @@ export default function configureStore ({ initialState = {}, history }) {
   if (__DEBUG__) {
     const devTools = window.devToolsExtension
       ? window.devToolsExtension()
-      : require('containers/DevTools').default.instrument();
+      : require('containers/DevTools').instrument();
     middleware = compose(middleware, devTools);
   }
 
@@ -22,7 +22,7 @@ export default function configureStore ({ initialState = {}, history }) {
 
   if (module.hot) {
     module.hot.accept('./modules', () => {
-      const nextRootReducer = require('./modules').default;
+      const nextRootReducer = require('./modules');
 
       store.replaceReducer(nextRootReducer);
     });

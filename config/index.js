@@ -22,6 +22,7 @@ try {
 let overrides;
 if (hasOverridesFile) {
   overrides = require(`./${overridesFilename}`)(config);
+  debug('overrides:', overrides);
 } else {
   debug(`No configuration overrides found for NODE_ENV "${config.env}"`);
 }

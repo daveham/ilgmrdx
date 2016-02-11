@@ -1,18 +1,10 @@
 import React from 'react';
-import { Link } from 'react-router';
+import MainToolbar from 'components/MainToolbar';
 
-export class HomeView extends React.Component {
-  render () {
-    return (
-      <div className='container text-center'>
-        <h1>InferenceLens Graphics Manager on React/Redux</h1>
-        <hr />
-        <Link to='/counter'>Counter</Link><br />
-        <Link to='/catalog'>Catalog</Link><br />
-        <Link to='/about'>About</Link>
-      </div>
-    );
-  }
-}
-
-export default HomeView;
+export default (props) => {
+  return (
+    <div className='container text-center'>
+      <MainToolbar page='home' />
+    </div>
+  );
+};

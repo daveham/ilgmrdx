@@ -1,8 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Link } from 'react-router';
+import MainToolbar from 'components/MainToolbar';
+
 import { actions as counterActions } from 'redux/modules/counter';
+
 import styles from './CounterView.scss';
 
 // We define mapStateToProps where we'd normally use
@@ -20,7 +22,7 @@ export class CounterView extends React.Component {
   render () {
     return (
       <div className='container text-center'>
-        <h1>Counter</h1>
+        <MainToolbar page='counter' />
         <h2>
           Sample Counter:&nbsp;
           <span className={styles['counter--green']}>{this.props.counter}</span>
@@ -33,8 +35,6 @@ export class CounterView extends React.Component {
                 onClick={this.props.doubleAsync}>
           Double (Async)
         </button>
-        <hr />
-        <Link to='/'>Home</Link>
       </div>
     );
   }
