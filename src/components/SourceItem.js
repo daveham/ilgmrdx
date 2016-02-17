@@ -5,7 +5,6 @@ import Busy from './Busy';
 import SourceItemTitle from './SourceItemTitle';
 import SourceItemDetails from './SourceItemDetails';
 import SourceImage from './SourceImage';
-import styles from './SourceItem.scss';
 
 class SourceItem extends Component {
   static get propTypes() {
