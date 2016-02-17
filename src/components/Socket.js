@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
-import Block from 'react-blocks';
-import FontIcon from 'material-ui/lib/font-icon';
-import IconButton from 'material-ui/lib/icon-button';
-import Colors from 'material-ui/lib/styles/colors';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Block from 'react-blocks';
+import Button from 'react-bootstrap/lib/Button';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
 import { connectService } from 'redux/modules/service';
 import { sendPingCommand } from 'redux/modules/commands';
 
@@ -31,28 +30,51 @@ export class Socket extends Component {
     this.props.ping({ data: 'socket component' });
   }
 
+  renderMessage() {
+    const { serviceError, connecting } = this.props;
+    const msg = serviceError || (connecting ? 'connecting' : 'connected');
+    let msgStyle;
+    if (serviceError) {
+      msgStyle = 'text-danger';
+    } else {
+      msgStyle = connecting ? 'text-warning' : 'text-info';
+    }
+    return <span className={msgStyle}>{msg}</span>;
+  }
+
   render () {
-    const msg = this.props.serviceError || (this.props.connecting ? 'connecting' : 'connected');
-    const id = this.props.socket ? `id: ${this.props.socket.id}` : '';
+    const { socket, lastSent, lastReceived } = this.props;
 
     return (
       <Block layout center className={styles.container}>
         <Block>
-          <IconButton tooltip='ping' iconStyle={{ fontSize: '20px' }} tooltipPosition={'top-right'} onClick={this.handleOnClickPing.bind(this)}>
-            <FontIcon className='material-icons' color={Colors.blue500}>wifi_tethering</FontIcon>
-          </IconButton>
+          <Button block onClick={this.handleOnClickPing.bind(this)}>
+            <Glyphicon glyph='bullhorn'/>
+          </Button>
         </Block>
-        <Block className={styles.status}>
-          {msg}
-        </Block>
-        <Block flex={2}>
-          last sent: {this.props.lastSent}
+        <Block centered flex={2}>
+          {this.renderMessage()}
         </Block>
         <Block flex={2}>
-          last received: {this.props.lastReceived}
+          <span className='text-muted'>last sent: </span>
+          {
+            lastSent &&
+              <span className='text-info'>{lastSent}</span>
+          }
+        </Block>
+        <Block flex={2}>
+          <span className='text-muted'>last received: </span>
+          {
+            lastReceived &&
+            <span className='text-info'>{lastReceived}</span>
+          }
         </Block>
         <Block flex={1} className={styles.socketId}>
-          {id}
+          <span className='text-muted'>id: </span>
+          {
+            socket &&
+              <span className='text-info'>{socket.id}</span>
+          }
         </Block>
       </Block>
     );

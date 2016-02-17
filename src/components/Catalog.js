@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import RaisedButton from 'material-ui/lib/raised-button';
+import Button from 'react-bootstrap/lib/Button';
 import styles from './Catalog.scss';
 import SourceList from './SourceList';
 import debugLib from 'debug';
@@ -10,23 +10,21 @@ const Catalog = (props) => {
 
   if (name && name.length > 0) {
     return (
-      <div className='container text-left'>
+      <div className={styles.container}>
         <h2>{name}</h2>
-        <div className={styles.catalog}>
-          <SourceList
-            sources={sources}
-            sourcesMetadataById={sourcesMetadataById}
-            sourcesThumbs={sourcesThumbs}
-            select={select}
-            generate={generate}
-            clear={clear} />
-        </div>
+        <SourceList
+          sources={sources}
+          sourcesMetadataById={sourcesMetadataById}
+          sourcesThumbs={sourcesThumbs}
+          select={select}
+          generate={generate}
+          clear={clear} />
       </div>
     );
   }
 
   const buttonProps = {
-    label: 'Open',
+    bsStyle: 'primary',
     onClick: (event) => {
       event.preventDefault();
       debug('open catalog button clicked');
@@ -34,7 +32,7 @@ const Catalog = (props) => {
     }
   };
 
-  return <RaisedButton {...buttonProps}/>;
+  return <Button {...buttonProps}>Open</Button>;
 };
 
 Catalog.propTypes = {

@@ -1,10 +1,10 @@
 import React from 'react';
-import MainToolbar from 'components/MainToolbar';
+
+import styles from './HomeView.scss';
 
 export default (props) => {
   return (
-    <div className='container text-center'>
-      <MainToolbar page='home' />
+    <div className={styles.container}>
     </div>
   );
 };

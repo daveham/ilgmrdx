@@ -1,6 +1,7 @@
 import React from 'react';
 import 'styles/core.scss';
-import Socket from 'components/Socket';
+import MainToolbar from 'components/MainToolbar';
+import Footer from 'components/Footer';
 
 // Note: Stateless/function components *will not* hot reload!
 // react-transform *only* works on component classes.
@@ -14,10 +15,11 @@ import Socket from 'components/Socket';
 function CoreLayout ({ children }) {
   return (
     <div className='page-container'>
+      <MainToolbar/>
       <div className='view-container'>
         {children}
       </div>
-      <Socket/>
+      <Footer/>
     </div>
   );
 }

@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { createSelector, createStructuredSelector } from 'reselect';
-import MainToolbar from 'components/MainToolbar';
+import Well from 'react-bootstrap/lib/Well';
 
 import { actions as catalogActions } from 'redux/modules/catalog';
 import { actions as sourceMetadataActions } from 'redux/modules/sources-metadata';
@@ -11,6 +11,8 @@ import Busy from 'components/Busy';
 
 import debugLib from 'debug';
 const debug = debugLib('app:CatalogView');
+
+import styles from './CatalogView.scss';
 
 const actions = Object.assign(
   {},
@@ -59,19 +61,20 @@ export class CatalogView extends Component {
     const { name, loading, sources, sourcesMetadata, sourcesThumbs } = catalog;
 
     return (
-      <div className='container text-center'>
-        <MainToolbar page='catalog' />
-        <Catalog
-          name={name}
-          loading={loading}
-          sources={sources}
-          sourcesMetadataById={sourcesMetadata}
-          sourcesThumbs={sourcesThumbs}
-          open={this.onOpen.bind(this)}
-          select={this.onSelect.bind(this)}
-          generate={this.onGenerate.bind(this)}
-          clear={this.onClear.bind(this)} />
-        <Busy busy={catalog.loading} />
+      <div className={styles.container}>
+        <Well>
+          <Catalog
+            name={name}
+            loading={loading}
+            sources={sources}
+            sourcesMetadataById={sourcesMetadata}
+            sourcesThumbs={sourcesThumbs}
+            open={this.onOpen.bind(this)}
+            select={this.onSelect.bind(this)}
+            generate={this.onGenerate.bind(this)}
+            clear={this.onClear.bind(this)} />
+          <Busy busy={catalog.loading} />
+        </Well>
       </div>
     );
   }

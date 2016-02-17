@@ -1,15 +1,8 @@
-$separator-color: #ccc;
-
 .container {
-  border-top: solid 1px $separator-color;
   margin: 0 20px;
+  vertical-align: text-bottom;
 }
 
 .socketId {
   text-align: right;
-}
-
-.status {
-  font-weight: 600;
-  margin: 0 30px;
 }

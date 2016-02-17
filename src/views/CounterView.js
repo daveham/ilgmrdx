@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import MainToolbar from 'components/MainToolbar';
+import Button from 'react-bootstrap/lib/Button';
+import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
+import Well from 'react-bootstrap/lib/Well';
 
 import { actions as counterActions } from 'redux/modules/counter';
 
@@ -21,20 +23,17 @@ export class CounterView extends React.Component {
 
   render () {
     return (
-      <div className='container text-center'>
-        <MainToolbar page='counter' />
-        <h2>
-          Sample Counter:&nbsp;
-          <span className={styles['counter--green']}>{this.props.counter}</span>
-        </h2>
-        <button className='btn btn-default'
-                onClick={() => this.props.increment(1)}>
-          Increment
-        </button>
-        <button className='btn btn-default'
-                onClick={this.props.doubleAsync}>
-          Double (Async)
-        </button>
+      <div className={styles.container}>
+        <Well>
+          <h1>
+            Sample Counter:&nbsp;
+            <span className='text-success'>{this.props.counter}</span>
+          </h1>
+          <ButtonGroup>
+            <Button onClick={() => this.props.increment(1)}>Increment</Button>
+            <Button onClick={this.props.doubleAsync}>Double (Async)</Button>
+          </ButtonGroup>
+        </Well>
       </div>
     );
   }

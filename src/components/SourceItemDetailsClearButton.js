@@ -1,15 +1,15 @@
 import React, { PropTypes } from 'react';
+import Button from 'react-bootstrap/lib/Button';
 
 const SourceItemDetailsClearButton = (props) => {
 
-  return <button
-    className='btn btn-success'
+  return <Button
     onClick={
       event => {
         event.preventDefault();
         props.clear(props.id);
       }
-    }>Clear</button>;
+    }>Clear</Button>;
 };
 
 SourceItemDetailsClearButton.propTypes = {

@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import Block from 'react-blocks';
+import Panel from 'react-bootstrap/lib/Panel';
 import Busy from './Busy';
 import SourceItemTitle from './SourceItemTitle';
 import SourceItemDetails from './SourceItemDetails';
@@ -70,36 +72,36 @@ class SourceItem extends Component {
       }
     }
 
+    const title = (
+      <SourceItemTitle
+        name={name}
+        expanded={expanded}
+        toggle={() => {
+          if (!metadata.loading) {
+            if (!(expanded || loaded)) {
+              select(id);
+            }
+            this.setState({ expanded: !expanded });
+          }
+        }}
+      />
+    );
+
     return (
-      <div>
-        <div className='container-fluid'>
-          <div className='row'>
-            <div className='col-md-2'>
-              <SourceImage
-                id={id}
-                thumb={thumb}
-                thumbsLoading={thumbsLoading}
-                generate={generate} />
-            </div>
-            <div className={'col-md-10 ' + styles.container}>
-              <div className={styles.item}>
-                <SourceItemTitle
-                  name={name}
-                  expanded={expanded}
-                  toggle={() => {
-                    if (!metadata.loading) {
-                      if (!(expanded || loaded)) {
-                        select(id);
-                      }
-                      this.setState({ expanded: !expanded });
-                    }
-                  }} />
-              </div>
-              {details}
-            </div>
-          </div>
-        </div>
-      </div>
+      <Panel header={title} collapsible expanded={this.state.expanded}>
+        <Block layout>
+          <Block>
+            <SourceImage
+              id={id}
+              thumb={thumb}
+              thumbsLoading={thumbsLoading}
+              generate={generate} />
+          </Block>
+          <Block flex>
+            {details}
+          </Block>
+        </Block>
+      </Panel>
     );
   }
 };

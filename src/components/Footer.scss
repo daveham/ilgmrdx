@@ -1,0 +1,7 @@
+@import './Variables';
+
+.container {
+  border-top: 1px solid $divider-color;
+  color: $muted-text-color;
+  margin: 0 20px;
+}

@@ -1,4 +1,5 @@
 import React, { PropTypes } from 'react';
+import Button from 'react-bootstrap/lib/Button';
 import Busy from './Busy';
 import styles from './SourceImage.scss';
 
@@ -12,13 +13,12 @@ const SourceImage = (props) => {
       return <img className={styles.thumb} src={src} />;
     } else {
       const genButtonProps = {
-        className: 'btn btn-success',
         onClick: event => {
           event.preventDefault();
           generate(id);
         }
       };
-      return <button {...genButtonProps}>Generate</button>;
+      return <Button {...genButtonProps}>Generate</Button>;
     }
   }
 };
