@@ -1,24 +1,28 @@
 import React, { PropTypes } from 'react';
+import Block from 'react-blocks';
 import SourceItem from './SourceItem';
 
 const SourceList = (props) => {
   const { sources, sourcesMetadataById, sourcesThumbs, select, generate, clear } = props;
   return (
-    <div>
+    <Block layout vertical>
       { sources.map(source => {
         let { id } = source;
-        return <SourceItem
-          key={id}
-          id={id}
-          name={source.name}
-          metadata={sourcesMetadataById[id]}
-          thumb={sourcesThumbs[id]}
-          thumbsLoading={sourcesThumbs.loading}
-          select={select}
-          generate={generate}
-          clear={clear} />;
+        return (
+          <Block key={id}>
+            <SourceItem
+              id={id}
+              name={source.name}
+              metadata={sourcesMetadataById[id]}
+              thumb={sourcesThumbs[id]}
+              thumbsLoading={sourcesThumbs.loading}
+              select={select}
+              generate={generate}
+              clear={clear} />
+          </Block>
+        );
       })}
-    </div>
+    </Block>
   );
 };
 

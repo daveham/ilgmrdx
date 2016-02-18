@@ -1,5 +1,7 @@
 import React, { PropTypes } from 'react';
+import Block from 'react-blocks';
 import SourceItemDetailsClearButton from './SourceItemDetailsClearButton';
+
 import styles from './SourceItemDetails.scss';
 
 const SourceItemDetails = (props) => {
@@ -37,10 +39,14 @@ const SourceItemDetails = (props) => {
   }
 
   return (
-    <div className={styles.container}>
-      {details}
-      {button}
-    </div>
+    <Block layout className={styles.container}>
+      <Block flex>
+        {details}
+      </Block>
+      <Block>
+        {button}
+      </Block>
+    </Block>
   );
 };
 

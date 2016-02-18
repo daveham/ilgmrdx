@@ -42,15 +42,39 @@ class SourceItem extends Component {
 
   render() {
     const { id, name, thumb, thumbsLoading, select, generate, clear, metadata } = this.props;
+    const { expanded } = this.state;
 
+    const busy = metadata && metadata.loading;
     const loaded = metadata && metadata.loading === false && metadata.status && metadata.status.length > 0;
 
-    let details = null;
-    const { expanded } = this.state;
+    const title = (
+      <SourceItemTitle
+        name={name}
+        expanded={expanded}
+        toggle={() => {
+          if (!metadata.loading) {
+            if (!(expanded || loaded)) {
+              select(id);
+            }
+            this.setState({ expanded: !expanded });
+          }
+        }}
+      >
+        <Busy busy={busy}/>
+      </SourceItemTitle>
+    );
+
+    let content = null;
     if (expanded) {
-      if (metadata.loading) {
-        details = <Busy />;
-      } else {
+      const image = <SourceImage
+        id={id}
+        thumb={thumb}
+        thumbsLoading={thumbsLoading}
+        generate={generate}
+      />;
+
+      let details = null;
+      if (!metadata.loading) {
         details = <SourceItemDetails
           id={id}
           error = {metadata.error}
@@ -67,39 +91,21 @@ class SourceItem extends Component {
           clear={(id) => {
             this.setState({ expanded: false });
             clear(id);
-          }} />;
+          }}
+        />;
       }
-    }
 
-    const title = (
-      <SourceItemTitle
-        name={name}
-        expanded={expanded}
-        toggle={() => {
-          if (!metadata.loading) {
-            if (!(expanded || loaded)) {
-              select(id);
-            }
-            this.setState({ expanded: !expanded });
-          }
-        }}
-      />
-    );
+      content = (
+        <Block layout>
+          <Block>{image}</Block>
+          <Block flex>{details}</Block>
+        </Block>
+      );
+    }
 
     return (
       <Panel header={title} collapsible expanded={this.state.expanded}>
-        <Block layout>
-          <Block>
-            <SourceImage
-              id={id}
-              thumb={thumb}
-              thumbsLoading={thumbsLoading}
-              generate={generate} />
-          </Block>
-          <Block flex>
-            {details}
-          </Block>
-        </Block>
+        {content}
       </Panel>
     );
   }

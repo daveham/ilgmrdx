@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/lib/Button';
 const SourceItemDetailsClearButton = (props) => {
 
   return <Button
+    bsSize='small'
     onClick={
       event => {
         event.preventDefault();

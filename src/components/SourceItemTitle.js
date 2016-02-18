@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import Block from 'react-blocks';
+import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+
 import styles from './SourceItemTitle.scss';
 
 class SourceItemTitle extends Component {
@@ -6,7 +9,8 @@ class SourceItemTitle extends Component {
     return {
       name: PropTypes.string,
       expanded: PropTypes.bool,
-      toggle: PropTypes.func
+      toggle: PropTypes.func,
+      children: PropTypes.node
     };
   }
 
@@ -20,16 +24,27 @@ class SourceItemTitle extends Component {
 
   render() {
     const itemProps = {
-      className: styles.item,
+      className: styles.container,
+      layout: true,
       onClick: event => {
         event.preventDefault();
         this.props.toggle();
       }
     };
 
-    const label = `${this.props.expanded ? '-' : '+'} ${this.props.name}`;
-
-    return <div {...itemProps}>{label}</div>;
+    return (
+      <Block {...itemProps}>
+        <Block className={styles.icon}>
+          <Glyphicon glyph={this.props.expanded ? 'minus-sign' : 'plus-sign'}/>
+        </Block>
+        <Block className={styles.title} flex>
+          {this.props.name}
+        </Block>
+        <Block className={styles.loading}>
+          {this.props.children}
+        </Block>
+      </Block>
+    );
   }
 };
 
