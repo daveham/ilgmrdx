@@ -43,11 +43,11 @@ export const connectService = () => {
 
 const sendServiceMessage = createAction(SEND_SERVICE_MESSAGE);
 export const receiveServiceMessage = createAction(RECEIVE_SERVICE_MESSAGE);
-export const sendServiceCommand = (message, payload) => {
+export const sendServiceCommand = (message, data) => {
   return (dispatch, getState) => {
     dispatch(sendServiceMessage({ message }));
     const { socket } = getState().service;
-    socket.emit(message, payload);
+    socket.emit(message, data);
   };
 };
 
@@ -63,7 +63,7 @@ export default (state = {}, action) => {
     case SEND_SERVICE_MESSAGE:
       return Object.assign({}, state, { lastSent: action.payload.message });
     case RECEIVE_SERVICE_MESSAGE:
-      return Object.assign({}, state, { lastReceived: action.payload.message });
+      return Object.assign({}, state, { lastReceived: `${action.payload.message}/${action.payload.data.status}` });
     default:
       return state;
   }

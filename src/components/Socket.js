@@ -2,10 +2,12 @@ import React, { Component, PropTypes } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Block from 'react-blocks';
-import Button from 'react-bootstrap/lib/Button';
-import Glyphicon from 'react-bootstrap/lib/Glyphicon';
+import SplitButton from 'react-bootstrap/lib/SplitButton';
+import MenuItem from 'react-bootstrap/lib/MenuItem';
 import { connectService } from 'redux/modules/service';
 import { sendPingCommand } from 'redux/modules/commands';
+// import debugLib from 'debug';
+// const debug = debugLib('app:Socket');
 
 import styles from './Socket.scss';
 
@@ -25,9 +27,8 @@ export class Socket extends Component {
     this.props.connect();
   }
 
-  handleOnClickPing(event) {
-    event.preventDefault();
-    this.props.ping({ data: 'socket component' });
+  handleOnClickPing(event, key) {
+    this.props.ping(key);
   }
 
   renderMessage() {
@@ -48,9 +49,10 @@ export class Socket extends Component {
     return (
       <Block layout center className={styles.container}>
         <Block>
-          <Button block onClick={this.handleOnClickPing.bind(this)}>
-            <Glyphicon glyph='bullhorn'/>
-          </Button>
+          <SplitButton title='ping' id='ping-dropdown' bsSize='sm'>
+            <MenuItem onSelect={this.handleOnClickPing.bind(this)} eventKey='socket'>socket</MenuItem>
+            <MenuItem onSelect={this.handleOnClickPing.bind(this)} eventKey='task'>task</MenuItem>
+          </SplitButton>
         </Block>
         <Block centered flex={2}>
           {this.renderMessage()}
