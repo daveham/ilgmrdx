@@ -16,6 +16,7 @@ const receiveServiceConntected = createAction(SERVICE_CONNECTED);
 const serviceFailed = createAction(SERVICE_FAILED);
 export const connectService = () => {
   return (dispatch, getState) => {
+    // TODO: make this return a promise
     dispatch(requestServiceConnect());
     if (typeof io === 'undefined') {
       debug('io not defined, service probably not running');
@@ -45,9 +46,36 @@ const sendServiceMessage = createAction(SEND_SERVICE_MESSAGE);
 export const receiveServiceMessage = createAction(RECEIVE_SERVICE_MESSAGE);
 export const sendServiceCommand = (message, data) => {
   return (dispatch, getState) => {
-    dispatch(sendServiceMessage({ message }));
-    const { socket } = getState().service;
-    socket.emit(message, data);
+    debug('sendServiceCommand', message, data);
+
+    switch (message) {
+      case 'il-ping':
+        // in 'socket' mode, ping the task server directly
+        if (data === 'socket') {
+          const { socket } = getState().service;
+          socket.emit(message, data);
+          dispatch(sendServiceMessage({ message }));
+        } else {
+          debug('task ping');
+
+          const body = JSON.stringify({ category: data });
+          const headers = {
+            'Content-Type': 'application/json',
+            Accept: 'application/json'
+          };
+          return fetch('/api/ping', { method: 'POST', body, headers })
+            .then(() => {
+              dispatch(sendServiceMessage({ message }));
+            })
+            .catch(reason => {
+              debug('ping task error', reason);
+            });
+        }
+        break;
+
+      default:
+        debug('unsupported command', message);
+    }
   };
 };
 

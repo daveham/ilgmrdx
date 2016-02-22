@@ -24,8 +24,7 @@ export default function configureApi(router) {
       });
     })
     .post((req, res, next) => {
-      const sourceName = req.body.sourceName;
-      const id = req.body.id;
+      const { id, sourceName } = req.body;
       debug('sourceName, id', sourceName, id);
       const sourcePath = path.join(paths.base(config.dir_data), 'sources', sourceName);
       const thumbPath = path.join(paths.base(config.dir_data), 'thumbs', `${id}_thumb.jpg`);
