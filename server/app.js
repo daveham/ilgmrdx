@@ -43,6 +43,11 @@ if (config.env === 'development') {
   // of development since this directory will be copied into ~/dist
   // when the application is compiled.
   app.use(express.static(paths.client('static')));
+
+  app.use((err, req, res, next) => {
+    debug('express error handler', err);
+    res.status(err.statusCode || 500).json(err);
+  });
 } else {
   debug(
     'Server is being run outside of live development mode. This starter kit ' +

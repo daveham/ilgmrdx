@@ -22,15 +22,13 @@ export default function configureApi(router) {
         queue.on('error', (error) => { debug(error); });
 
         queue.connect(() => {
-          debug('connected, enqueuing math task');
-          queue.enqueue('math', 'add', [1111, 2222]);
-          debug('returning status');
-          res.json({msg: 'ok'});
+          queue.enqueue('math', 'ping');
+          res.json({ msg: 'enqueued' });
         });
 
       } else {
         debug('unexpected ping category', category);
-        next(404);
+        res.status(404).json({ error: 'unexpected ping category' });
       }
     });
 }

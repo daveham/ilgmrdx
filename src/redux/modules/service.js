@@ -1,4 +1,5 @@
 import { createAction } from 'redux-actions';
+import fetch from 'isomorphic-fetch';
 import _debug from 'debug';
 const debug = _debug('app:redux:service');
 
@@ -46,34 +47,38 @@ const sendServiceMessage = createAction(SEND_SERVICE_MESSAGE);
 export const receiveServiceMessage = createAction(RECEIVE_SERVICE_MESSAGE);
 export const sendServiceCommand = (message, data) => {
   return (dispatch, getState) => {
-    debug('sendServiceCommand', message, data);
-
     switch (message) {
       case 'il-ping':
-        // in 'socket' mode, ping the task server directly
         if (data === 'socket') {
+          // in 'socket' mode, ping the task server directly
           const { socket } = getState().service;
-          socket.emit(message, data);
           dispatch(sendServiceMessage({ message }));
+          socket.emit(message, data);
         } else {
-          debug('task ping');
-
+          // otherwise assume 'task' mode, use an api call to enqueue a task to respond to the ping
           const body = JSON.stringify({ category: data });
           const headers = {
             'Content-Type': 'application/json',
             Accept: 'application/json'
           };
           return fetch('/api/ping', { method: 'POST', body, headers })
-            .then(() => {
-              dispatch(sendServiceMessage({ message }));
-            })
-            .catch(reason => {
-              debug('ping task error', reason);
-            });
+            .then(
+              (response) => { return response.json(); },
+              (error) => { return { error }; }
+            )
+            .then(
+              (json) => {
+                if (json.error) {
+                  dispatch(receiveServiceMessage({ message: json.error, data: { status: 'error' } }));
+                }
+                return dispatch(sendServiceMessage({ message }));
+              }
+            );
         }
         break;
 
       default:
+        dispatch(sendServiceMessage({ message: 'unsupported' }));
         debug('unsupported command', message);
     }
   };
