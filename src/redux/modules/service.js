@@ -53,7 +53,7 @@ export const sendServiceCommand = (message, data) => {
           // in 'socket' mode, ping the task server directly
           const { socket } = getState().service;
           dispatch(sendServiceMessage({ message }));
-          socket.emit(message, data);
+          socket.emit(message);
         } else {
           // otherwise assume 'task' mode, use an api call to enqueue a task to respond to the ping
           const body = JSON.stringify({ category: data });
@@ -96,7 +96,12 @@ export default (state = {}, action) => {
     case SEND_SERVICE_MESSAGE:
       return Object.assign({}, state, { lastSent: action.payload.message });
     case RECEIVE_SERVICE_MESSAGE:
-      return Object.assign({}, state, { lastReceived: `${action.payload.message}/${action.payload.data.status}` });
+      let { message } = action.payload;
+      const { data } = action.payload;
+      if (data && data.status) {
+        message = `${message}/${data.status}`;
+      }
+      return Object.assign({}, state, { lastReceived: `${message}` });
     default:
       return state;
   }

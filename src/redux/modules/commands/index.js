@@ -12,7 +12,7 @@ export const configureCommandHandlers = (socket, dispatch) => {
 
 };
 
-export const sendPingCommand = data => {
+export const sendPingCommand = (data) => {
   const ping = 'il-ping';
   return sendServiceCommand(ping, data);
 };
