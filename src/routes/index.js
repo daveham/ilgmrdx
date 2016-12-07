@@ -12,7 +12,7 @@ import CatalogView from 'views/CatalogView';
 import AboutView from 'views/AboutView';
 import NotFoundView from 'views/NotFoundView';
 
-export default (store) => (
+const routes = (/* store */) => (
   <Route path='/' component={CoreLayout}>
     <IndexRoute component={HomeView} />
     <Route component={CounterView} path='/counter' />
@@ -22,3 +22,5 @@ export default (store) => (
     <Redirect from='*' to='/404' />
   </Route>
 );
+
+export default routes;

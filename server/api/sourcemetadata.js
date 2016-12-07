@@ -24,7 +24,7 @@ const unpackIdentify = (dest, data) => {
 };
 
 export default function configureApi(router) {
-
+  debug('configure api get, delete /sourcemetadata');
   router.route('/sourcemetadata/:id')
   .get((req, res, next) => {
     const { id } = req.params;

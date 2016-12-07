@@ -50,8 +50,8 @@ export class Socket extends Component {
       <Block layout center className={styles.container}>
         <Block>
           <SplitButton title='ping' id='ping-dropdown' bsSize='sm'>
-            <MenuItem onSelect={this.handleOnClickPing.bind(this)} eventKey='socket'>socket</MenuItem>
-            <MenuItem onSelect={this.handleOnClickPing.bind(this)} eventKey='task'>task</MenuItem>
+            <MenuItem onSelect={this.handleOnClickPing} eventKey='socket'>socket</MenuItem>
+            <MenuItem onSelect={this.handleOnClickPing} eventKey='task'>task</MenuItem>
           </SplitButton>
         </Block>
         <Block centered flex={2}>
@@ -68,7 +68,7 @@ export class Socket extends Component {
           <span className='text-muted'>last received: </span>
           {
             lastReceived &&
-            <span className='text-info'>{lastReceived}</span>
+              <span className='text-info'>{lastReceived}</span>
           }
         </Block>
         <Block flex={1} className={styles.socketId}>

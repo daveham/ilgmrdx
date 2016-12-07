@@ -1,24 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// import injectTapEventPlugin from 'react-tap-event-plugin';
-import { useRouterHistory } from 'react-router';
-import { createHistory } from 'history';
+import { browserHistory } from 'react-router';
+import { syncHistoryWithStore } from 'react-router-redux';
 import makeRoutes from './routes';
 import Root from './containers/Root';
 import configureStore from './redux/configureStore';
 
-// injectTapEventPlugin();
-
-const historyConfig = { basename: __BASENAME__ };
-const history = useRouterHistory(createHistory)(historyConfig);
-
 const initialState = window.__INITIAL_STATE__;
-const store = configureStore({ initialState, history });
+const store = configureStore(initialState);
+const history = syncHistoryWithStore(browserHistory, store, {
+  selectLocationState: (state) => state.router
+});
 
 const routes = makeRoutes(store);
 
-// Render the React application to the DOM
 ReactDOM.render(
-  <Root history={history} routes={routes} store={store} />,
+  <Root
+    history={history}
+    routes={routes}
+    store={store}
+  />,
   document.getElementById('root')
 );

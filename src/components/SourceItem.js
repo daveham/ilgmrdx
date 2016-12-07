@@ -40,27 +40,35 @@ class SourceItem extends Component {
     };
   }
 
-  render() {
-    const { id, name, thumb, thumbsLoading, select, generate, clear, metadata } = this.props;
+  handleToggle() {
+    const { id, select, metadata } = this.props;
     const { expanded } = this.state;
-
-    const busy = metadata && metadata.loading;
     const loaded = metadata && metadata.loading === false && metadata.status && metadata.status.length > 0;
+    if (!metadata.loading) {
+      if (!(expanded || loaded)) {
+        select(id);
+      }
+      this.setState({ expanded: !expanded });
+    }
+  }
+
+  handleClear(id) {
+    this.setState({ expanded: false });
+    this.props.clear(id);
+  }
+
+  render() {
+    const { id, name, thumb, thumbsLoading, generate, metadata } = this.props;
+    const { expanded } = this.state;
+    const busy = metadata && metadata.loading;
 
     const title = (
       <SourceItemTitle
         name={name}
         expanded={expanded}
-        toggle={() => {
-          if (!metadata.loading) {
-            if (!(expanded || loaded)) {
-              select(id);
-            }
-            this.setState({ expanded: !expanded });
-          }
-        }}
+        toggle={this.handleToggle.bind(this)}
       >
-        <Busy busy={busy}/>
+        <Busy busy={busy} />
       </SourceItemTitle>
     );
 
@@ -77,21 +85,18 @@ class SourceItem extends Component {
       if (!metadata.loading) {
         details = <SourceItemDetails
           id={id}
-          error = {metadata.error}
-          filename = {metadata.filename}
-          status = {metadata.status}
-          size = {metadata.size}
-          ctime = {metadata.ctime}
-          format = {metadata.format}
-          width = {metadata.width}
-          height = {metadata.height}
-          depth = {metadata.depth}
-          filesize = {metadata.filesize}
-          resolution = {metadata.resolution}
-          clear={(id) => {
-            this.setState({ expanded: false });
-            clear(id);
-          }}
+          error={metadata.error}
+          filename={metadata.filename}
+          status={metadata.status}
+          size={metadata.size}
+          ctime={metadata.ctime}
+          format={metadata.format}
+          width={metadata.width}
+          height={metadata.height}
+          depth={metadata.depth}
+          filesize={metadata.filesize}
+          resolution={metadata.resolution}
+          clear={this.handleClear.bind(this)}
         />;
       }
 
@@ -109,6 +114,6 @@ class SourceItem extends Component {
       </Panel>
     );
   }
-};
+}
 
 export default SourceItem;

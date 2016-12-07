@@ -16,7 +16,7 @@ const requestServiceConnect = createAction(SERVICE_CONNECT);
 const receiveServiceConntected = createAction(SERVICE_CONNECTED);
 const serviceFailed = createAction(SERVICE_FAILED);
 export const connectService = () => {
-  return (dispatch, getState) => {
+  return (dispatch /*, getState */) => {
     // TODO: make this return a promise
     dispatch(requestServiceConnect());
     if (typeof io === 'undefined') {
@@ -95,13 +95,14 @@ export default (state = {}, action) => {
       return Object.assign({}, state, { connecting: false, serviceError: 'service not available' });
     case SEND_SERVICE_MESSAGE:
       return Object.assign({}, state, { lastSent: action.payload.message });
-    case RECEIVE_SERVICE_MESSAGE:
+    case RECEIVE_SERVICE_MESSAGE: {
       let { message } = action.payload;
       const { data } = action.payload;
       if (data && data.status) {
         message = `${message}/${data.status}`;
       }
       return Object.assign({}, state, { lastReceived: `${message}` });
+    }
     default:
       return state;
   }

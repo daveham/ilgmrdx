@@ -2,8 +2,9 @@ import { queue as Queue } from 'node-resque';
 const debug = require('debug')('app:api-ping');
 
 export default function configureApi(router) {
+  debug('conigure api post /ping');
   router.route('/ping')
-    .post((req, res, next) => {
+    .post((req, res /*, next */) => {
       debug('performing ping via task');
 
       const connectionDetails = {

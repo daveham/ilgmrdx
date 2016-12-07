@@ -4,9 +4,11 @@ import webpackConfig from '../build/webpack.config';
 import path from 'path';
 import logger from 'morgan';
 import bodyParser from 'body-parser';
-import historyApiFallback from 'connect-history-api-fallback';
+import history from 'connect-history-api-fallback';
 import _debug from 'debug';
 import config from 'config';
+import webpackDevMiddleware from './middleware/webpack-dev';
+import webpackHMRMiddleware from './middleware/webpack-hmr';
 
 const debug = _debug('app:server');
 const paths = config.utils_paths;
@@ -22,10 +24,14 @@ const router = express.Router();
 configureApi(router);
 app.use('/api', router);
 
-app.use('/thumbs', express.static(path.join(paths.base(config.dir_data), 'thumbs')));
-app.use('/tiles', express.static(path.join(paths.base(config.dir_data), 'tiles')));
+const thumbsData = path.join(paths.base(config.dir_data), 'thumbs');
+debug(`serving thumbs from '${thumbsData}'`);
+app.use('/thumbs', express.static(thumbsData));
+const tilesData = path.join(paths.base(config.dir_data), 'tiles');
+debug(`serving tiles from '${tilesData}'`);
+app.use('/tiles', express.static(tilesData));
 
-app.use(historyApiFallback({
+app.use(history({
   verbose: false
 }));
 
@@ -35,8 +41,8 @@ if (config.env === 'development') {
   // Enable webpack-dev and webpack-hot middleware
   const { publicPath } = webpackConfig.output;
 
-  app.use(require('./middleware/webpack-dev')(compiler, publicPath));
-  app.use(require('./middleware/webpack-hmr')(compiler));
+  app.use(webpackDevMiddleware(compiler, publicPath));
+  app.use(webpackHMRMiddleware(compiler));
 
   // Serve static assets from ~/src/static since Webpack is unaware of
   // these files. This middleware doesn't need to be enabled outside
@@ -44,10 +50,10 @@ if (config.env === 'development') {
   // when the application is compiled.
   app.use(express.static(paths.client('static')));
 
-  app.use((err, req, res, next) => {
-    debug('express error handler', err);
-    res.status(err.statusCode || 500).json(err);
-  });
+//  app.use((err, req, res /*, next */) => {
+//    debug('express error handler', err);
+//    res.status(err.statusCode || 500).json(err);
+//  });
 } else {
   debug(
     'Server is being run outside of live development mode. This starter kit ' +

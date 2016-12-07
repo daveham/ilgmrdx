@@ -1,11 +1,14 @@
 {
   "parser"  : "babel-eslint",
   "extends" : [
-    "standard",
-    "standard-react"
+    "eslint:recommended",
+    "plugin:react/recommended"
   ],
   "plugins" : [
-    "flow-vars"
+    "babel",
+    "react",
+    "promise",
+    "flowtype"
   ],
   "env"     : {
     "browser" : true,
@@ -13,17 +16,20 @@
   },
   "globals" : {
     "io" : false,
+    "Promise" : false,
     "__DEV__"      : false,
     "__PROD__"     : false,
     "__DEBUG__"    : false,
     "__DEBUG_NEW_WINDOW__" : false,
+    "__COVERAGE__" : false,
     "__BASENAME__" : false
   },
   "rules": {
     "semi" : [2, "always"],
     "padded-blocks" : 0,
     "space-before-function-paren" : 0,
-    "flow-vars/define-flow-type": 1,
-    "flow-vars/use-flow-type": 1
+    "jsx-quotes": [2, "prefer-single"],
+    "flowtype/define-flow-type": 1,
+    "flowtype/use-flow-type": 1
   }
 }

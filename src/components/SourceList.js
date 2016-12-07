@@ -6,22 +6,24 @@ const SourceList = (props) => {
   const { sources, sourcesMetadataById, sourcesThumbs, select, generate, clear } = props;
   return (
     <Block layout vertical>
-      { sources.map(source => {
-        let { id } = source;
-        return (
-          <Block key={id}>
-            <SourceItem
-              id={id}
-              name={source.name}
-              metadata={sourcesMetadataById[id]}
-              thumb={sourcesThumbs[id]}
-              thumbsLoading={sourcesThumbs.loading}
-              select={select}
-              generate={generate}
-              clear={clear} />
-          </Block>
-        );
-      })}
+      {
+        sources.map(source => {
+          let { id } = source;
+          return (
+            <Block key={id}>
+              <SourceItem
+                id={id}
+                name={source.name}
+                metadata={sourcesMetadataById[id]}
+                thumb={sourcesThumbs[id]}
+                thumbsLoading={sourcesThumbs.loading}
+                select={select}
+                generate={generate}
+                clear={clear} />
+            </Block>
+          );
+        })
+      }
     </Block>
   );
 };

@@ -3,10 +3,12 @@ import Socket from 'components/Socket';
 
 import styles from './Footer.scss';
 
-export default (props) => {
+const Footer = () => {
   return (
     <div className={styles.container}>
-      <Socket/>
+      <Socket />
     </div>
   );
 };
+
+export default Footer;

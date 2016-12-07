@@ -15,11 +15,11 @@ import Footer from 'components/Footer';
 function CoreLayout ({ children }) {
   return (
     <div className='page-container'>
-      <MainToolbar/>
+      <MainToolbar />
       <div className='view-container'>
         {children}
       </div>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

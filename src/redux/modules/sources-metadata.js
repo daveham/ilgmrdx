@@ -16,7 +16,7 @@ const requestSourceMetadata = createAction(REQUEST_SOURCE_METADATA);
 const receiveSourceMetadata = createAction(RECEIVE_SOURCE_METADATA);
 const requestSourceMetadataFailed = createAction(REQUEST_SOURCE_METADATA_FAILED);
 export const fetchSourceMetadata = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch /*, getState */) => {
     dispatch(requestSourceMetadata({ id }));
 
     return fetch(`/api/sourcemetadata/${id}`)
@@ -36,7 +36,7 @@ const sourceMetadataDelete = createAction(REQUEST_SOURCE_METADATA_DELETE);
 const sourceMetadataDeleted = createAction(REQUEST_SOURCE_METADATA_DELETED);
 const sourceMetadataDeleteFailed = createAction(REQUEST_SOURCE_METADATA_DELETE_FAILED);
 export const deleteSourceMetadata = (id) => {
-  return (dispatch, getState) => {
+  return (dispatch /*, getState */) => {
     dispatch(sourceMetadataDelete({ id }));
 
     return fetch(`/api/sourcemetadata/${id}`, { method: 'delete' })
@@ -80,11 +80,12 @@ export default (state = {}, action) => {
       id = action.payload.id;
       return Object.assign({}, state, { [id]: objectReducer(state[id], action) });
 
-    case REQUEST_SOURCE_METADATA_DELETED:
+    case REQUEST_SOURCE_METADATA_DELETED: {
       id = action.payload.id;
       const cloneState = Object.assign({}, state);
       delete cloneState[id];
       return cloneState;
+    }
 
     default:
       return state;

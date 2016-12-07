@@ -16,7 +16,7 @@ const requestSourceThumbs = createAction(REQUEST_SOURCE_THUMBS);
 const receiveSourceThumbs = createAction(RECEIVE_SOURCE_THUMBS);
 const requestSourceThumbsFailed = createAction(REQUEST_SOURCE_THUMBS_FAILED);
 export const fetchSourceThumbs = () => {
-  return (dispatch, getState) => {
+  return (dispatch /*, getState */) => {
     dispatch(requestSourceThumbs());
 
     return fetch('/api/sourcethumbs')
@@ -36,7 +36,7 @@ const generateSourceThumbStart = createAction(GENERATE_SOURCE_THUMB);
 const sourceThumbGenerated = createAction(SOURCE_THUMB_GENERATED);
 const generateSourceThumbFailed = createAction(GENERATE_SOURCE_THUMB_FAILED);
 export const generateSourceThumb = (id, sourceName) => {
-  return (dispatch, getState) => {
+  return (dispatch /*, getState */) => {
     dispatch(generateSourceThumbStart({ id }));
 
     const body = JSON.stringify({ id, sourceName });
@@ -74,7 +74,7 @@ export default (state = {}, action) => {
 
     case RECEIVE_SOURCE_THUMBS:
       newState = Object.assign({}, state, { loading: false });
-      action.payload.forEach(item => newState[item] = 'ready');
+      action.payload.forEach((item) => { newState[item] = 'ready'; });
       return newState;
 
     case GENERATE_SOURCE_THUMB:

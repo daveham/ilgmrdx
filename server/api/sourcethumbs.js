@@ -7,7 +7,7 @@ const debug = require('debug')('app:api-sourcethumbs');
 const paths = config.utils_paths;
 
 export default function configureApi(router) {
-
+  debug('configure api get, post /sourcethumbs');
   router.route('/sourcethumbs')
     .get((req, res, next) => {
       debug('get all sourcethumbs');
@@ -29,9 +29,7 @@ export default function configureApi(router) {
       const sourcePath = path.join(paths.base(config.dir_data), 'sources', sourceName);
       const thumbPath = path.join(paths.base(config.dir_data), 'thumbs', `${id}_thumb.jpg`);
       thumbPromise(sourcePath, thumbPath)
-        .then(data => {
-          res.json({ thumb: thumbPath });
-        })
+        .then(res.json({ thumb: thumbPath }))
         .catch(error => {
           debug('thumb promise error', error);
           next(error);

@@ -60,6 +60,7 @@ export class CatalogView extends Component {
     const { catalog } = this.props;
     const { name, loading, sources, sourcesMetadata, sourcesThumbs } = catalog;
 
+    debug('render');
     return (
       <div className={styles.container}>
         <Well>
@@ -88,7 +89,7 @@ const sourcesById = createSelector(
     debug('reselector for sources', sources);
     const byId = {};
     if (sources) {
-      sources.forEach(source => byId[source.id] = source);
+      sources.forEach((source) => { byId[source.id] = source; });
     }
     return byId;
   }

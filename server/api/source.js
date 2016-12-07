@@ -21,9 +21,7 @@ export default function configureApi(router) {
       const thumbFilename = `${id}_thumb.jpg`;
       const thumbFile = path.join(paths.base(config.dir_data), 'public', source.file);
       statPromise(thumbFile)
-      .then(data => {
-        res.send(thumbFilename);
-      })
+      .then(res.send(thumbFilename))
       .catch(error => {
         debug('ignore thumb file error', error);
         res.send('');

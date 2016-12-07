@@ -5,7 +5,7 @@ const Busy = (props) => {
   if (props.busy) {
     return <span className={styles.busy}>{props.text}</span>;
   } else {
-    return <span/>;
+    return <span />;
   }
 };
 

@@ -35,7 +35,7 @@ class SourceItemTitle extends Component {
     return (
       <Block {...itemProps}>
         <Block className={styles.icon}>
-          <Glyphicon glyph={this.props.expanded ? 'minus-sign' : 'plus-sign'}/>
+          <Glyphicon glyph={this.props.expanded ? 'minus-sign' : 'plus-sign'} />
         </Block>
         <Block className={styles.title} flex>
           {this.props.name}
@@ -46,6 +46,6 @@ class SourceItemTitle extends Component {
       </Block>
     );
   }
-};
+}
 
 export default SourceItemTitle;

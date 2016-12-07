@@ -17,7 +17,7 @@ export const requestCatalog = createAction(REQUEST_CATALOG);
 export const receiveCatalog = createAction(RECEIVE_CATALOG);
 export const requestCatalogFailed = createAction(REQUEST_CATALOG_FAILED);
 export const fetchCatalog = () => {
-  return (dispatch, getState) => {
+  return (dispatch /*, getState */) => {
     dispatch(requestCatalog());
 
     return fetch('/api/catalog')

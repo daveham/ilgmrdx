@@ -5,7 +5,7 @@ import NavItem from 'react-bootstrap/lib/NavItem';
 import NavbarBrand from 'react-bootstrap/lib/NavbarBrand';
 import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap';
 
-export default (props) => {
+const MainToolbar = () => {
   return (
     <Navbar>
       <Nav>
@@ -28,3 +28,5 @@ export default (props) => {
     </Navbar>
   );
 };
+
+export default MainToolbar;

@@ -21,6 +21,10 @@ export class CounterView extends React.Component {
     increment: React.PropTypes.func.isRequired
   };
 
+  handleIncrement() {
+    this.props.increment(1);
+  }
+
   render () {
     return (
       <div className={styles.container}>
@@ -30,7 +34,7 @@ export class CounterView extends React.Component {
             <span className='text-success'>{this.props.counter}</span>
           </h1>
           <ButtonGroup>
-            <Button onClick={() => this.props.increment(1)}>Increment</Button>
+            <Button onClick={this.handleIncrement}>Increment</Button>
             <Button onClick={this.props.doubleAsync}>Double (Async)</Button>
           </ButtonGroup>
         </Well>
