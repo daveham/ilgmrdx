@@ -1,7 +1,10 @@
 import React from 'react';
-import 'styles/core.scss';
 import MainToolbar from 'components/MainToolbar';
-import Footer from 'components/Footer';
+//import Footer from 'components/Footer';
+import 'styles/core.scss';
+
+import debugLib from 'debug';
+const debug = debugLib('app:CoreLayout');
 
 // Note: Stateless/function components *will not* hot reload!
 // react-transform *only* works on component classes.
@@ -12,20 +15,29 @@ import Footer from 'components/Footer';
 //
 // CoreLayout is a pure function of it's props, so we can
 // define it with a plain javascript function...
-function CoreLayout ({ children }) {
+export const CoreLayout = ({ children }) => {
+  debug('render');
   return (
     <div className='page-container'>
       <MainToolbar />
       <div className='view-container'>
         {children}
+        other stuff
       </div>
-      <Footer />
     </div>
   );
-}
+};
+
+/*
+      <MainToolbar />
+      <div className='view-container'>
+        {children}
+      </div>
+      <Footer />
+*/
 
 CoreLayout.propTypes = {
-  children: React.PropTypes.element
+  children: React.PropTypes.element.isRequired
 };
 
 export default CoreLayout;

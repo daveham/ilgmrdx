@@ -1,45 +1,32 @@
-import React, { PropTypes } from 'react';
+import React, { Component, PropTypes } from 'react';
+import { browserHistory, Router } from 'react-router';
 import { Provider } from 'react-redux';
-import { Router } from 'react-router';
+import debugLib from 'debug';
+const debug = debugLib('app:Root');
 
-export default class Root extends React.Component {
+class Root extends Component {
   static propTypes = {
-    history: PropTypes.object.isRequired,
-    routes: PropTypes.element.isRequired,
+    routes: PropTypes.object.isRequired,
     store: PropTypes.object.isRequired
   };
 
-  get content () {
-    return (
-      <Router history={this.props.history}>
-        {this.props.routes}
-      </Router>
-    );
-  }
-
-  get devTools () {
-    if (__DEBUG__) {
-      if (__DEBUG_NEW_WINDOW__) {
-        if (!window.devToolsExtension) {
-          require('../redux/utils/createDevToolsWindow').default(this.props.store);
-        } else {
-          window.devToolsExtension.open();
-        }
-      } else if (!window.devToolsExtension) {
-        const DevTools = require('containers/DevTools').default;
-        return <DevTools />;
-      }
-    }
+  shouldComponentUpdate() {
+    return false;
   }
 
   render () {
+    debug('render');
+    const { routes, store } = this.props;
+
     return (
-      <Provider store={this.props.store}>
+      <Provider store={store}>
         <div style={{ height: '100%' }}>
-          {this.content}
-          {this.devTools}
+          <Router history={browserHistory} children={routes} />
         </div>
       </Provider>
     );
   }
 }
+
+export default Root;
+

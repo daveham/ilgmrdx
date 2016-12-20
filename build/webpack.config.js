@@ -16,14 +16,14 @@ const webpackConfig = {
   devtool: config.compiler_devtool,
   resolve: {
     root: paths.base(config.dir_client),
-    extensions: ['', '.js', '.jsx']
+    extensions: ['', '.js', '.jsx', 'json']
   },
   module: {}
 };
 // ------------------------------------
 // Entry Points
 // ------------------------------------
-const APP_ENTRY_PATH = paths.base(config.dir_client) + '/app.js';
+const APP_ENTRY_PATH = paths.base(config.dir_client) + '/main.js';
 
 webpackConfig.entry = {
   app: __DEV__
