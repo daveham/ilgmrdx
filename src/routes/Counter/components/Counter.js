@@ -3,7 +3,7 @@ import Button from 'react-bootstrap/lib/Button';
 import ButtonGroup from 'react-bootstrap/lib/ButtonGroup';
 import Well from 'react-bootstrap/lib/Well';
 
-import styles from './counter.scss';
+import styles from './Counter.scss';
 
 export const Counter = (props) => (
   <div className={styles.container}>
