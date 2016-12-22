@@ -5,9 +5,10 @@ const debug = debugLib('app:HomeView');
 import styles from './HomeView.scss';
 
 export const HomeView = (/* props */) => {
-  debug('HomeView');
+  debug('render');
   return (
     <div className={styles.container}>
+      Home Contiainer
     </div>
   );
 };

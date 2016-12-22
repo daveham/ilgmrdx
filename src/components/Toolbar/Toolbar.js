@@ -2,16 +2,18 @@ import React from 'react';
 import Navbar from 'react-bootstrap/lib/Navbar';
 import Nav from 'react-bootstrap/lib/Nav';
 import NavItem from 'react-bootstrap/lib/NavItem';
-import NavbarBrand from 'react-bootstrap/lib/NavbarBrand';
 import { LinkContainer, IndexLinkContainer } from 'react-router-bootstrap';
+import debugLib from 'debug';
+const debug = debugLib('app:Toolbar');
 
-const MainToolbar = () => {
+export const Toolbar = () => {
+  debug('render');
   return (
     <Navbar>
       <Nav>
-        <NavbarBrand>
-          InferenceLens
-        </NavbarBrand>
+        <Navbar.Brand>
+          <a href='#'>InferenceLens</a>
+        </Navbar.Brand>
         <IndexLinkContainer to='/'>
           <NavItem>Home</NavItem>
         </IndexLinkContainer>
@@ -29,4 +31,4 @@ const MainToolbar = () => {
   );
 };
 
-export default MainToolbar;
+export default Toolbar;
