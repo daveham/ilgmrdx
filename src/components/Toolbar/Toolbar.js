@@ -12,7 +12,7 @@ export const Toolbar = () => {
     <Navbar>
       <Nav>
         <Navbar.Brand>
-          <a href='#'>InferenceLens</a>
+          <a href='#'>InferenceLensGM</a>
         </Navbar.Brand>
         <IndexLinkContainer to='/'>
           <NavItem>Home</NavItem>

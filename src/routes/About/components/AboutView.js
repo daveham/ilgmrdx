@@ -1,4 +1,5 @@
 import React from 'react';
+import Well from 'react-bootstrap/lib/Well';
 import debugLib from 'debug';
 const debug = debugLib('app:AboutView');
 
@@ -8,7 +9,10 @@ export const AboutView = (/* props */) => {
   debug('render');
   return (
     <div className={styles.container}>
-      About Contiainer
+      <Well className={styles.message}>
+        This is the graphics management interface for the
+        InferenceLens generative art software system.
+      </Well>
     </div>
   );
 };
