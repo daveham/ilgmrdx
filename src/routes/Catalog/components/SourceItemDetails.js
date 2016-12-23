@@ -1,5 +1,4 @@
 import React, { PropTypes } from 'react';
-import Block from 'react-blocks';
 import SourceItemDetailsClearButton from './SourceItemDetailsClearButton';
 
 import styles from './SourceItemDetails.scss';
@@ -39,14 +38,14 @@ const SourceItemDetails = (props) => {
   }
 
   return (
-    <Block layout className={styles.container}>
-      <Block flex>
+    <div className={styles.container}>
+      <div>
         {details}
-      </Block>
-      <Block>
+      </div>
+      <div>
         {button}
-      </Block>
-    </Block>
+      </div>
+    </div>
   );
 };
 

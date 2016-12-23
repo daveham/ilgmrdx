@@ -1,25 +1,13 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { createSelector, createStructuredSelector } from 'reselect';
 import Well from 'react-bootstrap/lib/Well';
 
-import { actions as catalogActions } from 'redux/modules/catalog';
-import { actions as sourceMetadataActions } from 'redux/modules/sources-metadata';
-import { actions as sourceThumbsActions } from 'redux/modules/sources-thumbs';
-import Catalog from 'components/Catalog';
-import Busy from 'components/Busy';
+import Catalog from './Catalog';
+import Busy from './Busy';
 
 import debugLib from 'debug';
 const debug = debugLib('app:CatalogView');
 
 import styles from './CatalogView.scss';
-
-const actions = Object.assign(
-  {},
-  catalogActions,
-  sourceMetadataActions,
-  sourceThumbsActions
-);
 
 export class CatalogView extends Component {
   static propTypes = {
@@ -81,22 +69,4 @@ export class CatalogView extends Component {
   }
 }
 
-// selectors
-const catalog = state => state.catalog;
-const sourcesById = createSelector(
-  state => state.catalog.sources,
-  sources => {
-    debug('reselector for sources', sources);
-    const byId = {};
-    if (sources) {
-      sources.forEach((source) => { byId[source.id] = source; });
-    }
-    return byId;
-  }
-);
-const stateSelector = createStructuredSelector({
-  catalog,
-  sourcesById
-});
-
-export default connect(stateSelector, actions)(CatalogView);
+export default CatalogView;

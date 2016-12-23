@@ -1,10 +1,11 @@
 import React, { Component, PropTypes } from 'react';
-import Block from 'react-blocks';
 import Panel from 'react-bootstrap/lib/Panel';
 import Busy from './Busy';
 import SourceItemTitle from './SourceItemTitle';
 import SourceItemDetails from './SourceItemDetails';
 import SourceImage from './SourceImage';
+
+import styles from './SourceItem.scss';
 
 class SourceItem extends Component {
   static get propTypes() {
@@ -101,10 +102,10 @@ class SourceItem extends Component {
       }
 
       content = (
-        <Block layout>
-          <Block>{image}</Block>
-          <Block flex>{details}</Block>
-        </Block>
+        <div className={styles.content}>
+          <div>{image}</div>
+          <div>{details}</div>
+        </div>
       );
     }
 

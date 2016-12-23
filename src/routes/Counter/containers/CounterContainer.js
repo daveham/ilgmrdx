@@ -1,9 +1,10 @@
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { increment, doubleAsync } from '../modules/counter';
 
+import { actions } from '../modules/counter';
 import Counter from '../components/Counter.js';
 
+const { increment, doubleAsync } = actions;
 const mapDispatchToProps = {
   increment: () => increment(1),
   doubleAsync

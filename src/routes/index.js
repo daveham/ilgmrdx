@@ -2,8 +2,7 @@ import CoreLayout from 'layouts/CoreLayout';
 import HomeRoute from './Home';
 import AboutRoute from './About';
 import CounterRoute from './Counter';
-//import CatalogView from 'views/CatalogView';
-//import NotFoundView from 'views/NotFoundView';
+import CatalogRoute from './Catalog';
 
 import debugLib from 'debug';
 const debug = debugLib('app:routes');
@@ -16,8 +15,8 @@ export const createRoutes = (store) => {
     indexRoute: HomeRoute,
     childRoutes: [
       AboutRoute,
-      CounterRoute(store)
-  //    CatalogView(store),
+      CounterRoute(store),
+      CatalogRoute(store)
     ]
   });
 };

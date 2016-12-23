@@ -1,17 +1,33 @@
 import { connect } from 'react-redux';
-import { createStructuredSelector } from 'reselect';
-import { increment, doubleAsync } from '../modules/catalog';
+import { createSelector, createStructuredSelector } from 'reselect';
 
-import Catalog from '../components/Catalog.js';
+import { actions as catalogActions } from '../modules/catalog';
+import { actions as sourceMetadataActions } from '../modules/sources-metadata';
+import { actions as sourceThumbsActions } from '../modules/sources-thumbs';
+import CatalogView from '../components/CatalogView.js';
 
-const mapDispatchToProps = {
-  increment: () => increment(1),
-  doubleAsync
-};
+const mapDispatchToProps = Object.assign(
+  {},
+  catalogActions,
+  sourceMetadataActions,
+  sourceThumbsActions
+);
 
-const catalogSelector = state => state.catalog;
+// selectors
+const catalog = state => state.catalog;
+const sourcesById = createSelector(
+  state => state.catalog.sources,
+  sources => {
+    const byId = {};
+    if (sources) {
+      sources.forEach((source) => { byId[source.id] = source; });
+    }
+    return byId;
+  }
+);
 const mapStateToProps = createStructuredSelector({
-  catalog: catalogSelector
+  catalog,
+  sourcesById
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(Catalog);
+export default connect(mapStateToProps, mapDispatchToProps)(CatalogView);
