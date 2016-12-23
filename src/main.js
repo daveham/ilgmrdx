@@ -3,8 +3,8 @@ import ReactDOM from 'react-dom';
 import createBrowserHistory from 'history/lib/createBrowserHistory';
 import { useRouterHistory } from 'react-router';
 import { syncHistoryWithStore } from 'react-router-redux';
-import createStore from './store/createStore';
-import Root from './containers/Root';
+import createStore from 'store/createStore';
+import Root from 'containers/Root';
 
 // Browser History Setup
 const browserHistory = useRouterHistory(createBrowserHistory)({

@@ -3,11 +3,7 @@ import Toolbar from 'components/Toolbar';
 import Footer from 'components/Footer';
 import 'styles/core.scss';
 
-import debugLib from 'debug';
-const debug = debugLib('app:CoreLayout');
-
 export const CoreLayout = ({ children }) => {
-  debug('render');
   return (
     <div className='page-container'>
       <Toolbar />
