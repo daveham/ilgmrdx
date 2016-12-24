@@ -1,18 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import Block from 'react-blocks';
 import SplitButton from 'react-bootstrap/lib/SplitButton';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
-import { connectService } from 'redux/modules/service';
-import { sendPingCommand } from 'redux/modules/commands';
-// import debugLib from 'debug';
-// const debug = debugLib('app:Socket');
+import debugLib from 'debug';
+const debug = debugLib('app:Socket');
 
 import styles from './Socket.scss';
 
 export class Socket extends Component {
-
   static propTypes = {
     connecting: PropTypes.bool,
     socket: PropTypes.object,
@@ -27,7 +21,8 @@ export class Socket extends Component {
     this.props.connect();
   }
 
-  handleOnClickPing(event, key) {
+  handleOnClickPing(key) {
+    debug('handleOnClickPing', key);
     this.props.ping(key);
   }
 
@@ -47,49 +42,40 @@ export class Socket extends Component {
     const { socket, lastSent, lastReceived } = this.props;
 
     return (
-      <Block layout center className={styles.container}>
-        <Block>
+      <div className={styles.container}>
+        <div>
           <SplitButton title='ping' id='ping-dropdown' bsSize='sm'>
-            <MenuItem onSelect={this.handleOnClickPing} eventKey='socket'>socket</MenuItem>
-            <MenuItem onSelect={this.handleOnClickPing} eventKey='task'>task</MenuItem>
+            <MenuItem onSelect={this.handleOnClickPing.bind(this)} eventKey='socket'>socket</MenuItem>
+            <MenuItem onSelect={this.handleOnClickPing.bind(this)} eventKey='task'>task</MenuItem>
           </SplitButton>
-        </Block>
-        <Block centered flex={2}>
+        </div>
+        <div className={styles.growMoreCentered}>
           {this.renderMessage()}
-        </Block>
-        <Block flex={2}>
+        </div>
+        <div className={styles.growMore}>
           <span className='text-muted'>last sent: </span>
           {
             lastSent &&
               <span className='text-info'>{lastSent}</span>
           }
-        </Block>
-        <Block flex={2}>
+        </div>
+        <div className={styles.growMore}>
           <span className='text-muted'>last received: </span>
           {
             lastReceived &&
               <span className='text-info'>{lastReceived}</span>
           }
-        </Block>
-        <Block flex={1} className={styles.socketId}>
+        </div>
+        <div className={styles.socketId}>
           <span className='text-muted'>id: </span>
           {
             socket &&
               <span className='text-info'>{socket.id}</span>
           }
-        </Block>
-      </Block>
+        </div>
+      </div>
     );
   }
 }
 
-const stateSelector = state => {
-  const { connecting, socket, serviceError, lastSent, lastReceived } = state.service;
-  return { connecting, socket, serviceError, lastSent, lastReceived };
-};
-
-const dispatchBinder = dispatch => {
-  return bindActionCreators({ connect: connectService, ping: sendPingCommand }, dispatch);
-};
-
-export default connect(stateSelector, dispatchBinder)(Socket);
+export default Socket;
