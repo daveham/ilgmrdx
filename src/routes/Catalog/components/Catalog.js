@@ -2,8 +2,6 @@ import React, { PropTypes } from 'react';
 import Button from 'react-bootstrap/lib/Button';
 import styles from './Catalog.scss';
 import SourceList from './SourceList';
-import debugLib from 'debug';
-const debug = debugLib('app:Catalog');
 
 const Catalog = (props) => {
   const { name, sources, sourcesMetadataById, sourcesThumbs, open, select, generate, clear } = props;
@@ -27,7 +25,6 @@ const Catalog = (props) => {
     bsStyle: 'primary',
     onClick: (event) => {
       event.preventDefault();
-      debug('open catalog button clicked');
       open();
     }
   };

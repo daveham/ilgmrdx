@@ -48,7 +48,6 @@ export class CatalogView extends Component {
     const { catalog } = this.props;
     const { name, loading, sources, sourcesMetadata, sourcesThumbs } = catalog;
 
-    debug('render');
     return (
       <div className={styles.container}>
         <Well>

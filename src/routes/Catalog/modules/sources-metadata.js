@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 import fetch from 'isomorphic-fetch';
 import debugLib from 'debug';
-const debug = debugLib('app:redux:sources-metadata');
+const debug = debugLib('app:module:sources-metadata');
 
 const REQUEST_SOURCE_METADATA = 'REQUEST_SOURCE_METADATA';
 const RECEIVE_SOURCE_METADATA = 'RECEIVE_SOURCE_METADATA';
@@ -64,8 +64,6 @@ const objectLoadingReducer = (state = {}, loading) => {
 
 // reducer
 export default (state = {}, action) => {
-  debug('reducer, action:', action);
-
   let id;
   switch (action.type) {
     case REQUEST_SOURCE_METADATA:

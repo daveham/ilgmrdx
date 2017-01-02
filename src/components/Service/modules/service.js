@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 import fetch from 'isomorphic-fetch';
 import _debug from 'debug';
-const debug = _debug('app:redux:service');
+const debug = _debug('app:module:service');
 
 import { configureCommandHandlers } from './commands';
 

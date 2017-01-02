@@ -6,7 +6,7 @@ import sources from './sources';
 import sourcesMetadata from './sources-metadata';
 import sourcesThumbs from './sources-thumbs';
 import debugLib from 'debug';
-const debug = debugLib('app:redux:catalog');
+const debug = debugLib('app:module:catalog');
 
 const REQUEST_CATALOG = 'REQUEST_CATALOG';
 export const RECEIVE_CATALOG = 'RECEIVE_CATALOG';
@@ -40,18 +40,18 @@ export const actions = {
   fetchCatalog
 };
 
-const loading = (state, action) => {
-  // debug('loading reducer, action:', action);
+const loading = (state = false, action) => {
   switch (action.type) {
     case REQUEST_CATALOG:
       return true;
-    default:
+    case RECEIVE_CATALOG:
       return false;
+    default:
+      return state;
   }
 };
 
 const name = (state = '', action) => {
-  // debug('name reducer, action:', action);
   switch (action.type) {
     case RECEIVE_CATALOG:
       return action.payload.name;

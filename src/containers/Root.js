@@ -1,8 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { Router } from 'react-router';
 import { Provider } from 'react-redux';
-import debugLib from 'debug';
-const debug = debugLib('app:Root');
 
 class Root extends Component {
   static propTypes = {
@@ -16,7 +14,6 @@ class Root extends Component {
   }
 
   render () {
-    debug('render');
     const { routes, store, history } = this.props;
 
     return (

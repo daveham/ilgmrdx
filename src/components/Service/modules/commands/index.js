@@ -1,6 +1,6 @@
 import { receiveServiceMessage, sendServiceCommand } from '../service';
 import _debug from 'debug';
-const debug = _debug('app:redux:service:commands');
+const debug = _debug('app:module:service:commands');
 
 export const configureCommandHandlers = (socket, dispatch) => {
 

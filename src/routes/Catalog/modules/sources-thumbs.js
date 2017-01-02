@@ -1,7 +1,7 @@
 import { createAction } from 'redux-actions';
 import fetch from 'isomorphic-fetch';
 import debugLib from 'debug';
-const debug = debugLib('app:redux:sources-thumbs');
+const debug = debugLib('app:module:sources-thumbs');
 
 const REQUEST_SOURCE_THUMBS = 'REQUEST_SOURCE_THUMBS';
 const RECEIVE_SOURCE_THUMBS = 'RECEIVE_SOURCE_THUMBS';
@@ -62,8 +62,6 @@ export const actions = {
 
 // reducer
 export default (state = {}, action) => {
-  debug('reducer, action:', action);
-
   let newState;
   switch (action.type) {
     case REQUEST_SOURCE_THUMBS:
