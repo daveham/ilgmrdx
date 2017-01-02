@@ -9,7 +9,7 @@ const Catalog = (props) => {
   if (name && name.length > 0) {
     return (
       <div className={styles.container}>
-        <h2>{name}</h2>
+        <h2 className={styles.title}>{name}</h2>
         <SourceList
           sources={sources}
           sourcesMetadataById={sourcesMetadataById}

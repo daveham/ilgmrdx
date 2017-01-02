@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import Well from 'react-bootstrap/lib/Well';
 
 import Catalog from './Catalog';
 import Busy from './Busy';
@@ -50,19 +49,17 @@ export class CatalogView extends Component {
 
     return (
       <div className={styles.container}>
-        <Well>
-          <Catalog
-            name={name}
-            loading={loading}
-            sources={sources}
-            sourcesMetadataById={sourcesMetadata}
-            sourcesThumbs={sourcesThumbs}
-            open={this.onOpen.bind(this)}
-            select={this.onSelect.bind(this)}
-            generate={this.onGenerate.bind(this)}
-            clear={this.onClear.bind(this)} />
-          <Busy busy={catalog.loading} />
-        </Well>
+        <Catalog
+          name={name}
+          loading={loading}
+          sources={sources}
+          sourcesMetadataById={sourcesMetadata}
+          sourcesThumbs={sourcesThumbs}
+          open={this.onOpen.bind(this)}
+          select={this.onSelect.bind(this)}
+          generate={this.onGenerate.bind(this)}
+          clear={this.onClear.bind(this)} />
+        <Busy busy={catalog.loading} />
       </div>
     );
   }

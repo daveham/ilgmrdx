@@ -2,12 +2,13 @@ import React from 'react';
 import Toolbar from 'components/Toolbar';
 import Footer from 'components/Footer';
 import 'styles/core.scss';
+import styles from './styles.scss';
 
 export const CoreLayout = ({ children }) => {
   return (
-    <div className='page-container'>
+    <div className={styles.pageContainer}>
       <Toolbar />
-      <div className='view-container'>
+      <div className={styles.viewContainer}>
         {children}
       </div>
       <Footer />

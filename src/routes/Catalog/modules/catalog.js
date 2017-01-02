@@ -45,6 +45,7 @@ const loading = (state = false, action) => {
     case REQUEST_CATALOG:
       return true;
     case RECEIVE_CATALOG:
+    case REQUEST_CATALOG_FAILED:
       return false;
     default:
       return state;
