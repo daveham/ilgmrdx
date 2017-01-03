@@ -44,7 +44,7 @@ export class Socket extends Component {
     return (
       <div className={styles.container}>
         <div>
-          <SplitButton title='ping' id='ping-dropdown' bsSize='sm'>
+          <SplitButton title='ping' id='ping-dropdown' dropup bsSize='xs'>
             <MenuItem onSelect={this.handleOnClickPing.bind(this)} eventKey='socket'>socket</MenuItem>
             <MenuItem onSelect={this.handleOnClickPing.bind(this)} eventKey='task'>task</MenuItem>
           </SplitButton>
@@ -53,14 +53,14 @@ export class Socket extends Component {
           {this.renderMessage()}
         </div>
         <div className={styles.growMore}>
-          <span className='text-muted'>last sent: </span>
+          <span className='text-muted'>sent: </span>
           {
             lastSent &&
               <span className='text-info'>{lastSent}</span>
           }
         </div>
         <div className={styles.growMore}>
-          <span className='text-muted'>last received: </span>
+          <span className='text-muted'>received: </span>
           {
             lastReceived &&
               <span className='text-info'>{lastReceived}</span>
