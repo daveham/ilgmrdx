@@ -7,6 +7,7 @@ import bodyParser from 'body-parser';
 import history from 'connect-history-api-fallback';
 import _debug from 'debug';
 import config from 'config';
+import mkdirp from 'mkdirp';
 import webpackDevMiddleware from './middleware/webpack-dev';
 import webpackHMRMiddleware from './middleware/webpack-hmr';
 
@@ -25,9 +26,12 @@ configureApi(router);
 app.use('/api', router);
 
 const thumbsData = path.join(paths.base(config.dir_data), 'thumbs');
+mkdirp.sync(thumbsData);
 debug(`serving thumbs from '${thumbsData}'`);
 app.use('/thumbs', express.static(thumbsData));
+
 const tilesData = path.join(paths.base(config.dir_data), 'tiles');
+mkdirp.sync(tilesData);
 debug(`serving tiles from '${tilesData}'`);
 app.use('/tiles', express.static(tilesData));
 
@@ -50,10 +54,15 @@ if (config.env === 'development') {
   // when the application is compiled.
   app.use(express.static(paths.client('static')));
 
-//  app.use((err, req, res /*, next */) => {
-//    debug('express error handler', err);
-//    res.status(err.statusCode || 500).json(err);
-//  });
+  app.use((req, res /*, next */) => {
+    debug('express 404 handler', req.path);
+    res.status(404).send('Sorry, cannot find that!');
+  });
+
+  app.use((err, req, res /*, next */) => {
+    debug('express error handler', err.stack);
+    res.status(err.statusCode || 500).json(err);
+  });
 } else {
   debug(
     'Server is being run outside of live development mode. This starter kit ' +

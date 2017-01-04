@@ -1,5 +1,6 @@
 import path from 'path';
 import fs from 'fs';
+import mkdirp from 'mkdirp';
 import config from 'config';
 
 const debug = require('debug')('app:api-util');
@@ -55,7 +56,7 @@ export const statPromise = target => {
 
 export const writeJsonCachePromise = (cachePath, file, cacheData) => {
   return new Promise((resolve, reject) => {
-    fs.mkdir(cachePath, (err) => {
+    mkdirp(cachePath, (err) => {
       debug('ignoring mkdir error', err);
       const fullFile = path.join(cachePath, file);
       fs.writeFile(fullFile, JSON.stringify(cacheData), (err) => {

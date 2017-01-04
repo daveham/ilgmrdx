@@ -53,7 +53,7 @@ export default function configureApi(router) {
           statPromise(photoFile),
           identifyPromise(photoFile)
         ])
-        .then(data => {
+        .then((data) => {
           info.status = 'exists';
 
           unpackStats(info, data[0]);
