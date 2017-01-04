@@ -1,11 +1,14 @@
 .container {
-  margin-bottom: 10px;
   padding-left: 20px;
   text-align: left;
   vertical-align: top;
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
+  justify-content: space-between;
+}
+
+.details {
+  flex: 2;
 }
 
 .dataerror {

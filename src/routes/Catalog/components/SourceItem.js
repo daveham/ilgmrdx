@@ -104,7 +104,7 @@ class SourceItem extends Component {
       content = (
         <div className={styles.content}>
           <div>{image}</div>
-          <div>{details}</div>
+          <div className={styles.details}>{details}</div>
         </div>
       );
     }

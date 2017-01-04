@@ -39,7 +39,7 @@ const SourceItemDetails = (props) => {
 
   return (
     <div className={styles.container}>
-      <div>
+      <div className={styles.details}>
         {details}
       </div>
       <div>

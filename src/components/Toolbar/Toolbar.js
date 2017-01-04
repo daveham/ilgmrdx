@@ -17,9 +17,6 @@ export const Toolbar = () => {
         <LinkContainer to='/catalog'>
           <NavItem>Catalog</NavItem>
         </LinkContainer>
-        <LinkContainer to='/counter'>
-          <NavItem>Counter</NavItem>
-        </LinkContainer>
         <LinkContainer to='/about'>
           <NavItem>About</NavItem>
         </LinkContainer>
@@ -27,5 +24,9 @@ export const Toolbar = () => {
     </Navbar>
   );
 };
+
+//  <LinkContainer to='/counter'>
+//    <NavItem>Counter</NavItem>
+//  </LinkContainer>
 
 export default Toolbar;
