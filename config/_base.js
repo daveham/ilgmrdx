@@ -39,12 +39,19 @@ const config = {
   },
   compiler_vendor : [
     'history',
+    'isomorphic-fetch',
     'react',
+    'react-addons-css-transition-group',
+    'react-bootstrap',
+    'react-dom',
     'react-redux',
     'react-router',
+    'react-router-bootstrap',
     'react-router-redux',
     'redux',
-    'react-blocks'
+    'redux-actions',
+    'redux-thunk',
+    'reselect'
   ],
 
   // ----------------------------------
