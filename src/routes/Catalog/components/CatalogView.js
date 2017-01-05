@@ -19,8 +19,11 @@ export class CatalogView extends Component {
     generateSourceThumb: PropTypes.func.isRequired
   };
 
+  componentDidMount() {
+    setTimeout(this.onOpen.bind(this), 100);
+  }
+
   onOpen () {
-    debug('onOpen');
     this.props.fetchCatalog();
     this.props.fetchSourceThumbs();
   }
@@ -55,7 +58,6 @@ export class CatalogView extends Component {
           sources={sources}
           sourcesMetadataById={sourcesMetadata}
           sourcesThumbs={sourcesThumbs}
-          open={this.onOpen.bind(this)}
           select={this.onSelect.bind(this)}
           generate={this.onGenerate.bind(this)}
           clear={this.onClear.bind(this)} />

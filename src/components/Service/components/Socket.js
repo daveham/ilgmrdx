@@ -33,13 +33,14 @@ export class Socket extends Component {
     if (serviceError) {
       msgStyle = 'text-danger';
     } else {
-      msgStyle = connecting ? 'text-warning' : 'text-info';
+      msgStyle = connecting ? 'text-primary' : 'text-success';
     }
     return <span className={msgStyle}>{msg}</span>;
   }
 
   render () {
     const { socket, lastSent, lastReceived } = this.props;
+    const textStyle = 'text-success';
 
     return (
       <div className={styles.container}>
@@ -56,21 +57,21 @@ export class Socket extends Component {
           <span className='text-muted'>sent: </span>
           {
             lastSent &&
-              <span className='text-info'>{lastSent}</span>
+              <span className={textStyle}>{lastSent}</span>
           }
         </div>
         <div className={styles.growMore}>
           <span className='text-muted'>received: </span>
           {
             lastReceived &&
-              <span className='text-info'>{lastReceived}</span>
+              <span className={textStyle}>{lastReceived}</span>
           }
         </div>
         <div className={styles.socketId}>
           <span className='text-muted'>id: </span>
           {
             socket &&
-              <span className='text-info'>{socket.id}</span>
+              <span className={textStyle}>{socket.id}</span>
           }
         </div>
       </div>

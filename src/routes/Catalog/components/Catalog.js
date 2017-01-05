@@ -1,15 +1,14 @@
 import React, { PropTypes } from 'react';
-import Button from 'react-bootstrap/lib/Button';
 import styles from './Catalog.scss';
 import SourceList from './SourceList';
 
 const Catalog = (props) => {
-  const { name, sources, sourcesMetadataById, sourcesThumbs, open, select, generate, clear } = props;
+  const { name, sources, sourcesMetadataById, sourcesThumbs, select, generate, clear } = props;
 
   if (name && name.length > 0) {
     return (
       <div className={styles.container}>
-        <h2 className={styles.title}>{name}</h2>
+        <h3 className={styles.title}>{name}</h3>
         <SourceList
           sources={sources}
           sourcesMetadataById={sourcesMetadataById}
@@ -21,15 +20,7 @@ const Catalog = (props) => {
     );
   }
 
-  const buttonProps = {
-    bsStyle: 'primary',
-    onClick: (event) => {
-      event.preventDefault();
-      open();
-    }
-  };
-
-  return <Button {...buttonProps}>Open</Button>;
+  return null;
 };
 
 Catalog.propTypes = {
@@ -37,7 +28,6 @@ Catalog.propTypes = {
   sources: PropTypes.array,
   sourcesMetadataById: PropTypes.object,
   sourcesThumbs: PropTypes.object,
-  open: PropTypes.func,
   select: PropTypes.func,
   generate: PropTypes.func,
   clear: PropTypes.func
@@ -48,7 +38,6 @@ Catalog.defaultProps = {
   sources: [],
   sourcesMetadataById: {},
   sourcesThumbs: {},
-  open: () => {},
   select: () => {},
   generate: () => {},
   clear: () => {}

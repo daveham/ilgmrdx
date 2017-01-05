@@ -1,7 +1,6 @@
 import { injectReducer } from 'store/reducers';
 
 export default (store) => ({
-  path: 'catalog',
   getComponent (nextState, cb) {
     require.ensure([], (require) => {
       const Catalog = require('./containers/CatalogContainer').default;
