@@ -88,20 +88,41 @@ export const sendServiceCommand = (message, data) => {
 export default (state = {}, action) => {
   switch (action.type) {
     case SERVICE_CONNECT:
-      return Object.assign({}, state, { connecting: true });
+      return {
+        ...state,
+        connecting: true
+      };
+
     case SERVICE_CONNECTED:
-      return Object.assign({}, state, { connecting: false, socket: action.payload.socket });
+      return {
+        ...state,
+        connecting: false,
+        socket: action.payload.socket
+      };
+
     case SERVICE_FAILED:
-      return Object.assign({}, state, { connecting: false, serviceError: 'service not available' });
+      return {
+        ...state,
+        connecting: false,
+        serviceError: 'service not available'
+      };
+
     case SEND_SERVICE_MESSAGE:
-      return Object.assign({}, state, { lastSent: action.payload.message });
+      return {
+        ...state,
+        lastSent: action.payload.message
+      };
+
     case RECEIVE_SERVICE_MESSAGE: {
       let { message } = action.payload;
       const { data } = action.payload;
       if (data && data.status) {
         message = `${message}/${data.status}`;
       }
-      return Object.assign({}, state, { lastReceived: `${message}` });
+      return {
+        ...state,
+        lastReceived: `${message}`
+      };
     }
     default:
       return state;

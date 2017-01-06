@@ -6,12 +6,11 @@ import { actions as sourceMetadataActions } from '../modules/sources-metadata';
 import { actions as sourceThumbsActions } from '../modules/sources-thumbs';
 import CatalogView from '../components/CatalogView.js';
 
-const mapDispatchToProps = Object.assign(
-  {},
-  catalogActions,
-  sourceMetadataActions,
-  sourceThumbsActions
-);
+const mapDispatchToProps = {
+  ...catalogActions,
+  ...sourceMetadataActions,
+  ...sourceThumbsActions
+};
 
 // selectors
 const catalog = state => state.catalog;

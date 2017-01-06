@@ -65,28 +65,38 @@ export default (state = {}, action) => {
   let newState;
   switch (action.type) {
     case REQUEST_SOURCE_THUMBS:
-      return Object.assign({}, state, { loading: true });
+      return {
+        ...state,
+        loading: true
+      };
 
     case REQUEST_SOURCE_THUMBS_FAILED:
-      return Object.assign({}, state, { loading: false });
+      return {
+        ...state,
+        loading: false
+      };
 
     case RECEIVE_SOURCE_THUMBS:
-      newState = Object.assign({}, state, { loading: false });
+      newState = {...state, loading: false };
       action.payload.forEach((item) => { newState[item] = 'ready'; });
       return newState;
 
     case GENERATE_SOURCE_THUMB:
-      newState = Object.assign({}, state);
-      newState[action.payload.id] = 'busy';
+      newState = {
+        ...state,
+        [action.payload.id]: 'busy'
+      };
       return newState;
 
     case SOURCE_THUMB_GENERATED:
-      newState = Object.assign({}, state);
-      newState[action.payload.id] = 'ready';
+      newState = {
+        ...state,
+        [action.payload.id]: 'ready'
+      };
       return newState;
 
     case GENERATE_SOURCE_THUMB_FAILED:
-      newState = Object.assign({}, state);
+      newState = { ...state };
       delete newState[action.payload.id];
       return newState;
 

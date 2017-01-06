@@ -56,10 +56,17 @@ export const actions = {
 };
 
 const objectReducer = (state = {}, action) => {
-  return Object.assign({}, state, action.payload, { loading: false });
+  return {
+    ...state,
+    ...action.payload,
+    loading: false
+  };
 };
 const objectLoadingReducer = (state = {}, loading) => {
-  return Object.assign({ loading }, state);
+  return {
+    ...state,
+    loading
+  };
 };
 
 // reducer
@@ -68,19 +75,28 @@ export default (state = {}, action) => {
   switch (action.type) {
     case REQUEST_SOURCE_METADATA:
       id = action.payload.id;
-      return Object.assign({}, state, { [id]: objectLoadingReducer(state[id], true) });
+      return {
+        ...state,
+        [id]: objectLoadingReducer(state[id], true)
+      };
 
     case REQUEST_SOURCE_METADATA_FAILED:
       id = action.payload.id;
-      return Object.assign({}, state, { [id]: objectLoadingReducer(state[id], false) });
+      return {
+        ...state,
+        [id]: objectLoadingReducer(state[id], false)
+      };
 
     case RECEIVE_SOURCE_METADATA:
       id = action.payload.id;
-      return Object.assign({}, state, { [id]: objectReducer(state[id], action) });
+      return {
+        ...state,
+        [id]: objectReducer(state[id], action)
+      };
 
     case REQUEST_SOURCE_METADATA_DELETED: {
       id = action.payload.id;
-      const cloneState = Object.assign({}, state);
+      const cloneState = { ...state };
       delete cloneState[id];
       return cloneState;
     }
