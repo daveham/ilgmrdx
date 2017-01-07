@@ -62,7 +62,6 @@ export const actions = {
 
 // reducer
 export default (state = {}, action) => {
-  let newState;
   switch (action.type) {
     case REQUEST_SOURCE_THUMBS:
       return {
@@ -76,29 +75,29 @@ export default (state = {}, action) => {
         loading: false
       };
 
-    case RECEIVE_SOURCE_THUMBS:
-      newState = {...state, loading: false };
+    case RECEIVE_SOURCE_THUMBS: {
+      const newState = {...state, loading: false };
       action.payload.forEach((item) => { newState[item] = 'ready'; });
       return newState;
+    }
 
     case GENERATE_SOURCE_THUMB:
-      newState = {
+      return {
         ...state,
         [action.payload.id]: 'busy'
       };
-      return newState;
 
     case SOURCE_THUMB_GENERATED:
-      newState = {
+      return {
         ...state,
         [action.payload.id]: 'ready'
       };
-      return newState;
 
-    case GENERATE_SOURCE_THUMB_FAILED:
-      newState = { ...state };
+    case GENERATE_SOURCE_THUMB_FAILED: {
+      const newState = { ...state };
       delete newState[action.payload.id];
       return newState;
+    }
 
     default:
       return state;

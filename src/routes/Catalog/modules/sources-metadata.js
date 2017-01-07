@@ -55,10 +55,10 @@ export const actions = {
   deleteSourceMetadata
 };
 
-const objectReducer = (state = {}, action) => {
+const objectReducer = (state = {}, { payload }) => {
   return {
     ...state,
-    ...action.payload,
+    ...payload,
     loading: false
   };
 };
@@ -71,34 +71,36 @@ const objectLoadingReducer = (state = {}, loading) => {
 
 // reducer
 export default (state = {}, action) => {
-  let id;
   switch (action.type) {
-    case REQUEST_SOURCE_METADATA:
-      id = action.payload.id;
+    case REQUEST_SOURCE_METADATA: {
+      const { id } = action.payload;
       return {
         ...state,
         [id]: objectLoadingReducer(state[id], true)
       };
+    }
 
-    case REQUEST_SOURCE_METADATA_FAILED:
-      id = action.payload.id;
+    case REQUEST_SOURCE_METADATA_FAILED: {
+      const { id } = action.payload;
       return {
         ...state,
         [id]: objectLoadingReducer(state[id], false)
       };
+    }
 
-    case RECEIVE_SOURCE_METADATA:
-      id = action.payload.id;
+    case RECEIVE_SOURCE_METADATA: {
+      const { id } = action.payload;
       return {
         ...state,
         [id]: objectReducer(state[id], action)
       };
+    }
 
     case REQUEST_SOURCE_METADATA_DELETED: {
-      id = action.payload.id;
-      const cloneState = { ...state };
-      delete cloneState[id];
-      return cloneState;
+      const { id } = action.payload;
+      const newState = { ...state };
+      delete newState[id];
+      return newState;
     }
 
     default:
