@@ -8,9 +8,21 @@ const debug = debugLib('app:CatalogView');
 
 import styles from './CatalogView.scss';
 
+const sourcePropType = PropTypes.shape({
+  id: PropTypes.string.isRequired,
+  file: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired
+});
+
 export class CatalogView extends Component {
   static propTypes = {
-    catalog: PropTypes.object.isRequired,
+    catalog: PropTypes.shape({
+      loading: PropTypes.bool.isRequired,
+      name: PropTypes.string.isRequired,
+      sources: PropTypes.arrayOf(sourcePropType).isRequired,
+      sourcesMetadata: PropTypes.object,
+      sourcesThumbs: PropTypes.object
+    }).isRequired,
     sourcesById: PropTypes.object.isRequired,
     fetchCatalog: PropTypes.func.isRequired,
     fetchSourceMetadata: PropTypes.func.isRequired,
