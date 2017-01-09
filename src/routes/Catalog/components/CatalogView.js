@@ -3,6 +3,8 @@ import React, { Component, PropTypes } from 'react';
 import Catalog from './Catalog';
 import Busy from './Busy';
 
+import { makeThumbImageDescriptor } from 'utils';
+
 import debugLib from 'debug';
 const debug = debugLib('app:CatalogView');
 
@@ -28,11 +30,21 @@ export class CatalogView extends Component {
     fetchSourceMetadata: PropTypes.func.isRequired,
     deleteSourceMetadata: PropTypes.func.isRequired,
     fetchSourceThumbs: PropTypes.func.isRequired,
-    generateSourceThumb: PropTypes.func.isRequired
+    generateSourceThumb: PropTypes.func.isRequired,
+    ensureImage: PropTypes.func.isRequired
   };
 
   componentDidMount() {
     setTimeout(this.onOpen.bind(this), 100);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.catalog.loading && !nextProps.catalog.loading) {
+      // detected end of catalog loading, ensure thumbnails
+      nextProps.catalog.sources.map((source) => {
+        this.props.ensureImage(makeThumbImageDescriptor(source.id));
+      });
+    }
   }
 
   onOpen () {
