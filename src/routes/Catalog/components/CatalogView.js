@@ -3,8 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import Catalog from './Catalog';
 import Busy from './Busy';
 
-import { makeThumbImageDescriptor } from 'utils';
-
 import debugLib from 'debug';
 const debug = debugLib('app:CatalogView');
 
@@ -25,7 +23,11 @@ export class CatalogView extends Component {
       sourcesMetadata: PropTypes.object,
       sourcesThumbs: PropTypes.object
     }).isRequired,
+    images: PropTypes.object,
     sourcesById: PropTypes.object.isRequired,
+    thumbnailImageDescriptors: PropTypes.arrayOf(PropTypes.object).isRequired,
+    thumbnailImageUrls: PropTypes.arrayOf(PropTypes.string).isRequired,
+
     fetchCatalog: PropTypes.func.isRequired,
     fetchSourceMetadata: PropTypes.func.isRequired,
     deleteSourceMetadata: PropTypes.func.isRequired,
@@ -41,9 +43,8 @@ export class CatalogView extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.catalog.loading && !nextProps.catalog.loading) {
       // detected end of catalog loading, ensure thumbnails
-      nextProps.catalog.sources.map((source) => {
-        this.props.ensureImage(makeThumbImageDescriptor(source.id));
-      });
+      const { ensureImage, thumbnailImageDescriptors } = nextProps;
+      thumbnailImageDescriptors.map(ensureImage);
     }
   }
 
@@ -70,12 +71,23 @@ export class CatalogView extends Component {
     this.props.generateSourceThumb(id, this.props.sourcesById[id].file);
   }
 
-  render () {
+  renderDynamicImages() {
+    return (
+      <div>
+        {
+          this.props.thumbnailImageUrls.map((url, index) => (<img key={index} src={url}/>))
+        }
+      </div>
+    );
+  }
+
+  render() {
     const { catalog } = this.props;
     const { name, loading, sources, sourcesMetadata, sourcesThumbs } = catalog;
 
     return (
       <div className={styles.container}>
+        {this.renderDynamicImages()}
         <Catalog
           name={name}
           loading={loading}

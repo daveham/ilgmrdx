@@ -15,6 +15,8 @@
     }
   }
 */
+
+// an image id is used as a key into an image cache
 export const makeImageId = (imageDescriptor) => {
   const { source, purpose } = imageDescriptor;
   if (purpose) {

@@ -40,6 +40,7 @@ export const ensureImage = (imageDescriptor, force) => {
         return response.json();
       }).then((data) => {
         if (data.url) {
+          debug('ensureImage', { url: data.url });
           dispatch(receiveImageAction({ imageDescriptor, url: data.url }));
         } else if (data.task) {
           debug('ensureImage: Task enqueued', { task: data.task });
