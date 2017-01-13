@@ -1,5 +1,14 @@
 import fs from 'fs';
+import { queue as Queue } from 'node-resque';
 import { pathFromImageDescriptor, urlFromImageDescriptor } from './utils';
+
+const connectionDetails = {
+  pkg: 'ioredis',
+  host: '127.0.0.1',
+  password: null,
+  port: 6379,
+  database: 0
+};
 
 const debug = require('debug')('app:api-images');
 
@@ -12,19 +21,24 @@ export default function configureApi(router) {
       const path = pathFromImageDescriptor(id);
       debug('POST images', { path });
 
-      fs.stat(path, (err, stats) => {
+      fs.access(path, fs.constants.R_OK, (err) => {
         if (err) {
-          debug('file stat error', err);
-          return res.json({ task: 'xyzzy' });
+          if (err.code === 'ENOENT') {
+            debug('file does not exist - creating task');
+            const queue = new Queue({ connection: connectionDetails });
+            queue.on('error', (error) => { debug(error); });
+            queue.connect(() => {
+              queue.enqueue('il', 'ping'); // TODO: image thumbnail task
+              res.json({ task: 'xyzzy' });
+            });
+          } else {
+            debug('file access error', err);
+            res.json({ error: err });
+          }
+        } else {
+          debug('file exists');
+          res.json({ url: urlFromImageDescriptor(id) });
         }
-
-        if (!stats.isFile()) {
-          debug('not a file', path);
-          return res.json({ task: 'xyzzy' });
-        }
-
-        debug('file stats', stats);
-        return res.json({ url: urlFromImageDescriptor(id) });
       });
     });
 }

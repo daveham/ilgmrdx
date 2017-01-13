@@ -43,7 +43,10 @@ export const ensureImage = (imageDescriptor, force) => {
           debug('ensureImage', { url: data.url });
           dispatch(receiveImageAction({ imageDescriptor, url: data.url }));
         } else if (data.task) {
-          debug('ensureImage: Task enqueued', { task: data.task });
+          debug('ensureImage', { task: data.task });
+        } else if (data.error) {
+          debug('ensureImage', { error: data.error });
+          throw new Error(data.error); // TODO: what value here?
         } else {
           throw new Error('ensureImage: Unexpected response from server');
         }
